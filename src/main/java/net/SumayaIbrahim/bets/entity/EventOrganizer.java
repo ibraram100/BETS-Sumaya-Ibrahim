@@ -1,9 +1,7 @@
 package net.SumayaIbrahim.bets.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +12,9 @@ import java.util.List;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-public class EventOrganizer extends User {
-    @OneToMany(mappedBy = "eventOrganizer", cascade = CascadeType.ALL)
+@Table(name = "event_organizers")
+public class EventOrganizer extends User{
+    @OneToMany(mappedBy = "eventOrganizer", cascade = CascadeType.ALL) // event could have multiple TicketTiers
     private List<Event> events = new ArrayList<>();
 }

@@ -24,7 +24,7 @@ public class TicketTier {
     private float ticketPrice;
     @Column(name = "available_tickets")
     private int availableTickets;
-    @ManyToOne
+    @ManyToOne // ticket tier could only have one event
     @JoinColumn(name = "event_id")
     private Event event;
 }

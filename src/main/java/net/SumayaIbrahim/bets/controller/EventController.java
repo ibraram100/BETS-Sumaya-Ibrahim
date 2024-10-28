@@ -1,9 +1,8 @@
 package net.SumayaIbrahim.bets.controller;
 
-
 import lombok.AllArgsConstructor;
-import net.SumayaIbrahim.bets.dto.UserDTO;
-import net.SumayaIbrahim.bets.service.UserService;
+import net.SumayaIbrahim.bets.dto.EventDTO;
+import net.SumayaIbrahim.bets.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,19 +10,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @AllArgsConstructor
 @RestController // This class is able to handle http requests
-@RequestMapping("/api/users")
-public class UserController {
-    private UserService userService;
-
-    // building create User REST api
+@RequestMapping("/api/events")
+public class EventController {
+    private EventService eventService;
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO)
+    public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO)
     {
-        UserDTO savedUser = userService.createUser(userDTO);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        EventDTO savedEvent = eventService.createEvent(eventDTO);
+        return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
     }
-
-
 }

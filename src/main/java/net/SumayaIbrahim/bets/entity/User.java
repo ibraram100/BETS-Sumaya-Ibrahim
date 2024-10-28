@@ -20,11 +20,13 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 // The @Entity annotation in Spring Boot is used to mark a class as a JPA entity, which means it represents a table in a relational database
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
+@MappedSuperclass
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id // this specifies id as a primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // automatically generate the id by incremting the last id in the database
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // automatically generate the id by incrementing the last id in the database
     private long id;
     @Column(unique = true, nullable = false) // it's like saying the email shouldn't be null and should be unique
     private String email;
