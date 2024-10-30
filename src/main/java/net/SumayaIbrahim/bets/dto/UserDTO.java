@@ -16,6 +16,7 @@ import java.sql.Date;
 public class UserDTO {
     private long id;
     private String email;
+    private String username;
     private String firstName;
     private String lastName;
     private Date dateOfBirth;

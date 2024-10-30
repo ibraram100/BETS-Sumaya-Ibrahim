@@ -30,6 +30,9 @@ public class User {
     private long id;
     @Column(unique = true, nullable = false) // it's like saying the email shouldn't be null and should be unique
     private String email;
+    @Column(unique = true, nullable = false)
+    private String username;
+
     @Column(name = "first_name") // it would be named "first_name" in the db
     private String firstName;
     @Column(name = "last_name")

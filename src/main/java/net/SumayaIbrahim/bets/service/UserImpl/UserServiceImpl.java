@@ -3,7 +3,6 @@ package net.SumayaIbrahim.bets.service.UserImpl;
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.User;
-import net.SumayaIbrahim.bets.mapper.UserMapper;
 import net.SumayaIbrahim.bets.repository.UserRepository;
 import net.SumayaIbrahim.bets.service.UserService;
 import org.modelmapper.ModelMapper;
