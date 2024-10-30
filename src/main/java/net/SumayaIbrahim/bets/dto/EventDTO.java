@@ -24,5 +24,5 @@ public class EventDTO {
     private Date eventDate;
     private String location;
     private List<TicketTier> ticketTiers = new ArrayList<>();
-    private EventOrganizer eventOrganizer;
+    private Long eventOrganizerID;
 }

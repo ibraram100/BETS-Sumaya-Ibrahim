@@ -23,6 +23,5 @@ public class EventServiceImpl implements EventService {
         Event savedEvent = eventRepository.save(event);
         EventDTO savedEventDTO = modelMapper.map(savedEvent, EventDTO.class);
         return savedEventDTO;
-
     }
 }
