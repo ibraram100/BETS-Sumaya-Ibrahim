@@ -25,8 +25,9 @@ public class SpringSecurityConfig {
     SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> {
-//                    authorize.requestMatchers(HttpMethod.POST, "api/**").hasRole("ADMIN");// means only admins can use POST requests on all the subfolders of /api
+//                  authorize.requestMatchers(HttpMethod.POST, "api/**").hasRole("ADMIN");// means only admins can use POST requests on all the subfolders of /api
                     authorize.requestMatchers("/api/auth/register").permitAll();// Allows anyone to access the subfolders within auth
+                    authorize.requestMatchers("/api/events/allevents").permitAll(); // Allows anyone to view events
                     authorize.anyRequest().authenticated(); // accept any request, without postman seems to not work probably
                 }).httpBasic(Customizer.withDefaults());
         return http.build();
