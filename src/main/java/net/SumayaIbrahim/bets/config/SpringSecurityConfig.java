@@ -3,8 +3,11 @@ package net.SumayaIbrahim.bets.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +17,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 // What we are basically doing is making some basic authinthication in here, so only people with a username and a password can use the system
 @Configuration
+@EnableWebSecurity
+
 public class SpringSecurityConfig {
 
     // This one is very important, as spring boot can't deal with plain text passwords, they must be encoded first
@@ -28,6 +33,7 @@ public class SpringSecurityConfig {
 //                  authorize.requestMatchers(HttpMethod.POST, "api/**").hasRole("ADMIN");// means only admins can use POST requests on all the subfolders of /api
                     authorize.requestMatchers("/api/auth/register").permitAll();// Allows anyone to access the subfolders within auth
                     authorize.requestMatchers("/api/events/allevents").permitAll(); // Allows anyone to view events
+                    authorize.requestMatchers("api/auth/login").permitAll();
                     authorize.anyRequest().authenticated(); // accept any request, without postman seems to not work probably
                 }).httpBasic(Customizer.withDefaults());
         return http.build();
@@ -46,5 +52,11 @@ public class SpringSecurityConfig {
 
         return new InMemoryUserDetailsManager(admin);
 
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
