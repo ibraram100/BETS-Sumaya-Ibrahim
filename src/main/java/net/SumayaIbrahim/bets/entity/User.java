@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 // The setter and getter annotation allows us to use set and get methods without
 // actually writing it in the class, it just makes life a lot easier
@@ -20,10 +22,12 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 // The @Entity annotation in Spring Boot is used to mark a class as a JPA entity, which means it represents a table in a relational database
-//@Entity
-//@Table(name = "users")
-@MappedSuperclass
+@Entity
+@Table(name = "users")
+//@MappedSuperclass
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class User {
     @Id // this specifies id as a primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // automatically generate the id by incrementing the last id in the database
@@ -40,6 +44,13 @@ public class User {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(
+            name="users_roles",
+            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    private List<Role> roles = new ArrayList<>();
 
 
 }

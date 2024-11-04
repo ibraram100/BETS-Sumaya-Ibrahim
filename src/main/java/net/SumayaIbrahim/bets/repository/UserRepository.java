@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // what we are basically doing is extending Spring Data JPA's JpaRepository
 // which provide methods for performing CRUD (Create, Read, Update, Delete) operations on your entities
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+
+    User findByEmail(String email);
 
 }
