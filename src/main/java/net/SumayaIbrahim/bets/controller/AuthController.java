@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @AllArgsConstructor
 
 @Controller
@@ -40,19 +42,13 @@ public class AuthController {
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDTO userDTO,
                                BindingResult result,
-                               Model model){
+                               Model model)
+    {
         User existingUser = userService.findUserByEmail(userDTO.getEmail());
 //      Checking if email already exists
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
-        }
-//      Checking if username already exists
-        existingUser = userService.findUserByEmail(userDTO.getEmail()); // i'm sorry i have to re-write this, because java destroys this object for some reason, it's so annoying
-        if(existingUser != null && existingUser.getUsername() != null && !existingUser.getUsername().isEmpty()){
-            result.rejectValue("username", null,
-                    "There is already an account registered with the same email");
-
         }
 
 
@@ -63,6 +59,20 @@ public class AuthController {
 
         userService.createUser(userDTO);
         return "redirect:/register?success";
+    }
+    // Handling login
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    // Displaying all events
+    @GetMapping("/users")
+    public String allUsers(Model model)
+    {
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
     }
 }
 

@@ -11,6 +11,7 @@ import net.SumayaIbrahim.bets.repository.RoleRepository;
 import net.SumayaIbrahim.bets.repository.UserRepository;
 import net.SumayaIbrahim.bets.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.List;
 @Getter
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private PasswordEncoder passwordEncoder;
@@ -62,7 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findAllUsers() {
-        return null;
+    public List<User> findAllUsers() {
+
+        return userRepository.findAll();
     }
 }
