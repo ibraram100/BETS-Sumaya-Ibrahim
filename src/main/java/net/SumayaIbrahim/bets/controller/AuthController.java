@@ -3,8 +3,11 @@ package net.SumayaIbrahim.bets.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import net.SumayaIbrahim.bets.dto.EventDTO;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.User;
+import net.SumayaIbrahim.bets.service.EventImpl.EventServiceImpl;
+import net.SumayaIbrahim.bets.service.EventService;
 import net.SumayaIbrahim.bets.service.UserImpl.UserServiceImpl;
 import net.SumayaIbrahim.bets.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -21,9 +24,7 @@ import java.util.List;
 @Controller
 public class AuthController {
     private UserService userService;
-
-
-
+    private EventService eventService;
 
     // handler method to handle home page request
     @GetMapping("/index")
@@ -66,7 +67,7 @@ public class AuthController {
         return "login";
     }
 
-    // Displaying all events
+    // Displaying all users
     @GetMapping("/users")
     public String allUsers(Model model)
     {
@@ -74,6 +75,16 @@ public class AuthController {
         model.addAttribute("users", users);
         return "users";
     }
+
+    @GetMapping("/getevents")
+    public String getAllEvents(Model model)
+    {
+        List<EventDTO> events = eventService.GetAllEvents();
+        model.addAttribute("events", events);
+        return "events"; // it will go to events.html in resources folder, it will also send events to that file
+    }
+
+
 }
 
 
