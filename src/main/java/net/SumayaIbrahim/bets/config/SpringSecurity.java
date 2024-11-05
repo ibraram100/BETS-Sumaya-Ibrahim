@@ -32,8 +32,10 @@ public class SpringSecurity {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index").permitAll()
-                                .requestMatchers("/api/events/**").permitAll()
+                                .requestMatchers("/events/getevents").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/events/create-event").permitAll()
+
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")

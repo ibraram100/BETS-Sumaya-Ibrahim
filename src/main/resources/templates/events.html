@@ -46,8 +46,16 @@
             <td th:text = "${event.eventName}"></td>
             <td th:text = "${event.eventDate}"></td>
             <td th:text = "${event.location}"></td>
-            <td th:text = "${event.ticketTiers}"></td>
-
+<!--            <td th:text = "${event.ticketTiers}"></td>-->
+            <td>
+                <ul>
+                    <li th:each="tier : ${event.ticketTiers}">
+                        <span th:text="${tier.ticketType}"></span> -
+                        <span th:text="${'$'+tier.ticketPrice}"></span> -
+                        <span th:text="${tier.availableTickets + 'Tickets'}"></span>
+                    </li>
+                </ul>
+            </td>
         </tr>
         </tbody>
     </table>

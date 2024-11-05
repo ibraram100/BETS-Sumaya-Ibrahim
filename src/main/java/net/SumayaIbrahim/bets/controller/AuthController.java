@@ -76,15 +76,6 @@ public class AuthController {
         return "users";
     }
 
-    @GetMapping("/getevents")
-    public String getAllEvents(Model model)
-    {
-        List<EventDTO> events = eventService.GetAllEvents();
-        model.addAttribute("events", events);
-        return "events"; // it will go to events.html in resources folder, it will also send events to that file
-    }
-
-
 }
 
 
