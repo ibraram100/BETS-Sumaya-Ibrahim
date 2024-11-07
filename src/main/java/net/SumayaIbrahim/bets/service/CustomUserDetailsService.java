@@ -1,13 +1,9 @@
 package net.SumayaIbrahim.bets.service;
 
 
-import jakarta.servlet.http.HttpSession;
-import net.SumayaIbrahim.bets.Sessions.UserSession;
 import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.UserRepository;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

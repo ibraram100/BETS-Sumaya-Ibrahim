@@ -2,7 +2,6 @@ package net.SumayaIbrahim.bets.service.UserImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.Role;

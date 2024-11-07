@@ -1,7 +1,6 @@
 package net.SumayaIbrahim.bets.service;
 
 import net.SumayaIbrahim.bets.dto.EventDTO;
-import net.SumayaIbrahim.bets.entity.Event;
 
 import java.util.List;
 

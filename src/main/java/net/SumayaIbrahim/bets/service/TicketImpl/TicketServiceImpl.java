@@ -2,7 +2,6 @@ package net.SumayaIbrahim.bets.service.TicketImpl;
 
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.TicketDTO;
-import net.SumayaIbrahim.bets.dto.TicketDTO;
 import net.SumayaIbrahim.bets.entity.Ticket;
 import net.SumayaIbrahim.bets.repository.TicketRepository;
 import net.SumayaIbrahim.bets.service.TicketService;

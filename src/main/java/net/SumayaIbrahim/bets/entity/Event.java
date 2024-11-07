@@ -28,7 +28,6 @@ public class Event {
      private String location;
      @OneToMany(mappedBy = "event", cascade = CascadeType.ALL) // event could have multiple TicketTiers
      private List<TicketTier> ticketTiers = new ArrayList<>();
-
      @ManyToOne // event can have only one EventOrganizer
      @JoinColumn(name = "event_org_id")
      private User user;

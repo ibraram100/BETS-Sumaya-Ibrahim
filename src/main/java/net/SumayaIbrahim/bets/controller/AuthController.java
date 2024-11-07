@@ -1,16 +1,11 @@
 package net.SumayaIbrahim.bets.controller;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.SumayaIbrahim.bets.Sessions.UserSession;
-import net.SumayaIbrahim.bets.dto.EventDTO;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.User;
-import net.SumayaIbrahim.bets.service.EventImpl.EventServiceImpl;
 import net.SumayaIbrahim.bets.service.EventService;
-import net.SumayaIbrahim.bets.service.UserImpl.UserServiceImpl;
 import net.SumayaIbrahim.bets.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

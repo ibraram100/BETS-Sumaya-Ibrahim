@@ -1,6 +1,5 @@
 package net.SumayaIbrahim.bets.Sessions;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

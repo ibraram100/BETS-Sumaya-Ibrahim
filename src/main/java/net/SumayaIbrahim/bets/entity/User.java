@@ -24,8 +24,6 @@ import java.util.List;
 // The @Entity annotation in Spring Boot is used to mark a class as a JPA entity, which means it represents a table in a relational database
 @Entity
 @Table(name = "users")
-//@MappedSuperclass
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Inheritance(strategy = InheritanceType.JOINED)
 
 public class User {

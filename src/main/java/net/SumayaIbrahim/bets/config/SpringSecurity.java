@@ -3,15 +3,11 @@ package net.SumayaIbrahim.bets.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,12 +31,10 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/events/getevents").permitAll()
+                        authorize.requestMatchers("/register/**").permitAll()// means anyone can access the register link
+                                .requestMatchers("/index").permitAll() // anyone can access the homepage
+                                .requestMatchers("events/**").hasRole("ADMIN") // only admins can access the events
                                 .requestMatchers("/users").hasRole("ADMIN")
-                                .requestMatchers("/events/create-event").hasRole("ADMIN")
-                                .requestMatchers("/events/save-event").hasRole("ADMIN")
                                 .requestMatchers("/view/**").hasRole("ADMIN")
 
 
