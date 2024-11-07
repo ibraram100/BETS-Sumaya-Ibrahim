@@ -1,8 +1,10 @@
 package net.SumayaIbrahim.bets.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import net.SumayaIbrahim.bets.Sessions.UserSession;
 import net.SumayaIbrahim.bets.dto.EventDTO;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.User;
@@ -16,15 +18,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @AllArgsConstructor
-
+@SessionAttributes({"user"})
 @Controller
 public class AuthController {
     private UserService userService;
     private EventService eventService;
+    private UserSession userSession;
 
     // handler method to handle home page request
     @GetMapping("/index")
@@ -45,6 +49,7 @@ public class AuthController {
                                BindingResult result,
                                Model model)
     {
+
         User existingUser = userService.findUserByEmail(userDTO.getEmail());
 //      Checking if email already exists
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
@@ -63,8 +68,11 @@ public class AuthController {
     }
     // Handling login
     @GetMapping("/login")
-    public String login(){
+    public String login()
+    {
+
         return "login";
+
     }
 
     // Displaying all users

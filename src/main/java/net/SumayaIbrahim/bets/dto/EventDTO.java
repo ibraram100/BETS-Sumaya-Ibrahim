@@ -1,11 +1,9 @@
 package net.SumayaIbrahim.bets.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.SumayaIbrahim.bets.entity.EventOrganizer;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 
 import java.sql.Date;
@@ -24,5 +22,5 @@ public class EventDTO {
     private Date eventDate;
     private String location;
     private List<TicketTier> ticketTiers = new ArrayList<>();
-    private Long eventOrganizerID;
+    private Long userId;
 }

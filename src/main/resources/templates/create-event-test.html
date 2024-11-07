@@ -1,0 +1,71 @@
+<form th:action="@{/events/create}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required>
+    </div>
+    <div>
+        <label for="eventDate">Event Date:</label>
+        <input type="date" id="eventDate" name="eventDate" required>
+    </div>
+    <div>
+        <label for="userId">Event Date:</label>
+        <input
+                class="form-control"
+                id="userId"
+                name="userId"
+                th:field="*{userId}"
+                type="hidden"
+        />
+    </div>
+    <div th:each="index, tier : ${tiers}">
+        <hr>
+        <h4>Ticket Tier <span th:text="${index + 1}"></span></h4>
+        <div>
+            <label for="ticketType_[[${index}]]">Ticket Type:</label>
+            <input type="text" id="ticketType_[[${index}]]" name="ticketTiers[[${index}]]
+                .ticketType" required>
+        </div>
+        <div>
+            <label for="ticketPrice_[[${index}]]">Ticket Price:</label>
+            <input type="number" step="0.01" id="ticketPrice_[[${index}]]" name="ticketTiers[[${index}]]
+                .ticketPrice" required>
+        </div>
+        <div>
+            <label for="availableTickets_[[${index}]]">Available Tickets:</label>
+            <input type="number" id="availableTickets_[[${index}]]" name="ticketTiers[[${index}]]
+                .availableTickets" required>
+        </div>
+    </div>
+
+    <button type="button" id="addTierButton">Add Ticket Tier</button>
+
+    <button type="submit">Create Event</button>
+</form>
+
+
+<script>
+document.getElementById('addTierButton').addEventListener('click', function() {
+const tierCount = document.querySelectorAll('.ticket-tier').length;
+
+const tierTemplate = `
+<hr>
+<h4>Ticket Tier ${tierCount + 1}</h4>
+<div>
+    <label for="ticketType_${tierCount}">Ticket Type:</label>
+    <input type="text" id="ticketType_${tierCount}" name="ticketTiers[${tierCount}].ticketType" required>
+</div>
+<div>
+    <label for="ticketPrice_${tierCount}">Ticket Price:</label>
+    <input type="number" step="0.01" id="ticketPrice_${tierCount}" name="ticketTiers[${tierCount}].ticketPrice" required>
+</div>
+<div>
+    <label for="availableTickets_${tierCount}">Available Tickets:</label>
+    <input type="number" id="availableTickets_${tierCount}" name="ticketTiers[${tierCount}].availableTickets" required>
+</div>
+`;
+
+const form = document.querySelector('form');
+form.insertAdjacentHTML('beforeend', tierTemplate);
+});
+
+</script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Edit Event</a>
+    </div>
+</nav>
+<br /><br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Edit Event</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" role="form" th:action="@{/events/update-event}" th:object="${event}">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Event Name</label>
+                        <input class="form-control" id="eventName" name="eventName" th:field="*{eventName}" type="text" th:placeholder="${event.eventName}"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Event Location</label>
+                        <input class="form-control" id="location" name="location" th:field="*{location}" type="text"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Event Date</label>
+                        <input class="form-control" id="eventDate" name="eventDate" th:field="*{eventDate}" type="date"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="eventId">Event ID</label>
+                        <input class="form-control" id="eventID" name="eventID" th:field="*{eventID}" type="hidden"/>
+                    </div>
+<!--                    <div th:each="index, tier : ${event.ticketTiers}">-->
+<!--                        <hr>-->
+<!--                        <h4>Ticket Tier <span th:text="${index + 1}"></span></h4>-->
+<!--                        <div>-->
+<!--                            <label for="ticketType_[[${index}]]">Ticket Type:</label>-->
+<!--                            <input type="text" id="ticketType_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .ticketType" th:field="*{ticketTiers[__${index}__].ticketType}" required>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="ticketPrice_[[${index}]]">Ticket Price:</label>-->
+<!--                            <input type="number" step="0.01" id="ticketPrice_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .ticketPrice" th:field="*{ticketTiers[__${index}__].ticketPrice}" required>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="availableTickets_[[${index}]]">Available Tickets:</label>-->
+<!--                            <input type="number" id="availableTickets_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .availableTickets" th:field="*{ticketTiers[__${index}__].availableTickets}" required>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <button type="button" id="addTierButton">Add Ticket Tier</button>
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let tierCount = [[${event.ticketTiers.size()}]]; // Initial tier count based on existing tiers
+
+    document.getElementById('addTierButton').addEventListener('click', function() {
+        tierCount++;
+
+        const tierTemplate = `
+            <hr>
+            <h4>Ticket Tier ${tierCount}</h4>
+            <div>
+                <label for="ticketType_${tierCount}">Ticket Type:</label>
+                <input type="text" id="ticketType_${tierCount}" name="ticketTiers[${tierCount - 1}].ticketType" required>
+            </div>
+            <div>
+                <label for="ticketPrice_${tierCount}">Ticket Price:</label>
+                <input type="number" step="0.01" id="ticketPrice_${tierCount}" name="ticketTiers[${tierCount - 1}].ticketPrice" required>
+            </div>
+            <div>
+                <label for="availableTickets_${tierCount}">Available Tickets:</label>
+                <input type="number" id="availableTickets_${tierCount}" name="ticketTiers[${tierCount - 1}].availableTickets" required>
+            </div>
+        `;
+
+        const form = document.querySelector('form');
+        form.insertAdjacentHTML('beforeend', tierTemplate);
+    });
+</script>
+</body>
+</html>

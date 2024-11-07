@@ -31,5 +31,5 @@ public class Event {
 
      @ManyToOne // event can have only one EventOrganizer
      @JoinColumn(name = "event_org_id")
-     private EventOrganizer eventOrganizer;
+     private User user;
 }

@@ -1,9 +1,13 @@
 package net.SumayaIbrahim.bets.service;
 
 
+import jakarta.servlet.http.HttpSession;
+import net.SumayaIbrahim.bets.Sessions.UserSession;
 import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.UserRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,18 +26,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
         if (user != null) {
+
             return new org.springframework.security.core.userdetails.User(user.getEmail(),
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         }else{
             throw new UsernameNotFoundException("Invalid username or password.");
         }
+
     }
 
     private Collection < ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
@@ -42,4 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .collect(Collectors.toList());
         return mapRoles;
     }
+
+
+
 }

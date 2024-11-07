@@ -55,8 +55,7 @@
                                 th:field="*{eventName}"
                                 type="text"
                         />
-<!--                        <p th:errors = "*{eventName}" class="text-danger"-->
-<!--                           th:if="${#fields.hasErrors('eventName')}"></p>-->
+
                     </div>
 
 
@@ -70,93 +69,167 @@
                                 th:field="*{location}"
                                 type="text"
                         />
-                        <!--                        <p th:errors = "*{eventName}" class="text-danger"-->
-                        <!--                           th:if="${#fields.hasErrors('eventName')}"></p>-->
+
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Event Location</label>
                         <input
                                 class="form-control"
-                                id="location"
-                                name="location"
-                                placeholder="Enter Event Location"
-                                th:field="*{location}"
+                                id="userId"
+                                name="userId"
+                                th:field="*{userId}"
                                 type="hidden"
                         />
-                        <!--                        <p th:errors = "*{eventName}" class="text-danger"-->
-                        <!--                           th:if="${#fields.hasErrors('eventName')}"></p>-->
                     </div>
 
-                    <!--                    Username field-->
-<!--                    <div class="form-group mb-3">-->
-<!--                        <label class="form-label">Username</label>-->
-<!--                        <input-->
-<!--                                class="form-control"-->
-<!--                                id="username"-->
-<!--                                name="username"-->
-<!--                                placeholder="Enter Username"-->
-<!--                                th:field="*{username}"-->
-<!--                                type="text"-->
-<!--                        />-->
-<!--                        <p th:errors = "*{username}" class="text-danger"-->
-<!--                           th:if="${#fields.hasErrors('username')}"></p>-->
-<!--                    </div>-->
-
-
-
-
-
-<!--                    <div class="form-group mb-3">-->
-<!--                        <label class="form-label">Last Name</label>-->
-<!--                        <input-->
-<!--                                class="form-control"-->
-<!--                                id="lastName"-->
-<!--                                name="lastName"-->
-<!--                                placeholder="Enter last name"-->
-<!--                                th:field="*{lastName}"-->
-<!--                                type="text"-->
-<!--                        />-->
-<!--                        <p th:errors = "*{lastName}" class="text-danger"-->
-<!--                           th:if="${#fields.hasErrors('lastName')}"></p>-->
-<!--                    </div>-->
-
-<!--                    <div class="form-group mb-3">-->
-<!--                        <label class="form-label">Email</label>-->
-<!--                        <input-->
-<!--                                class="form-control"-->
-<!--                                id="email"-->
-<!--                                name="email"-->
-<!--                                placeholder="Enter email address"-->
-<!--                                th:field="*{email}"-->
-<!--                                type="email"-->
-<!--                        />-->
-<!--                        <p th:errors = "*{email}" class="text-danger"-->
-<!--                           th:if="${#fields.hasErrors('email')}"></p>-->
-<!--                    </div>-->
-
-<!--                    <div class="form-group mb-3">-->
-<!--                        <label class="form-label">Password</label>-->
-<!--                        <input-->
-<!--                                class="form-control"-->
-<!--                                id="password"-->
-<!--                                name="password"-->
-<!--                                placeholder="Enter password"-->
-<!--                                th:field="*{password}"-->
-<!--                                type="password"-->
-<!--                        />-->
-<!--                        <p th:errors = "*{password}" class="text-danger"-->
-<!--                           th:if="${#fields.hasErrors('password')}"></p>-->
-<!--                    </div>-->
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Register</button>
-                        <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Event Date</label>
+                        <input
+                                class="form-control"
+                                id="eventDate"
+                                name="eventDate"
+                                th:field="*{eventDate}"
+                                type="date"
+                        />
                     </div>
-                </form>
-            </div>
+
+
+
+
+
+
+
+                                    <!--                    Username field-->
+                <!--                    <div class="form-group mb-3">-->
+                <!--                        <label class="form-label">Username</label>-->
+                <!--                        <input-->
+                <!--                                class="form-control"-->
+                <!--                                id="username"-->
+                <!--                                name="username"-->
+                <!--                                placeholder="Enter Username"-->
+                <!--                                th:field="*{username}"-->
+                <!--                                type="text"-->
+                <!--                        />-->
+                <!--                        <p th:errors = "*{username}" class="text-danger"-->
+                <!--                           th:if="${#fields.hasErrors('username')}"></p>-->
+                <!--                    </div>-->
+
+
+
+
+
+                <!--                    <div class="form-group mb-3">-->
+                <!--                        <label class="form-label">Last Name</label>-->
+                <!--                        <input-->
+                <!--                                class="form-control"-->
+                <!--                                id="lastName"-->
+                <!--                                name="lastName"-->
+                <!--                                placeholder="Enter last name"-->
+                <!--                                th:field="*{lastName}"-->
+                <!--                                type="text"-->
+                <!--                        />-->
+                <!--                        <p th:errors = "*{lastName}" class="text-danger"-->
+                <!--                           th:if="${#fields.hasErrors('lastName')}"></p>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="form-group mb-3">-->
+                <!--                        <label class="form-label">Email</label>-->
+                <!--                        <input-->
+                <!--                                class="form-control"-->
+                <!--                                id="email"-->
+                <!--                                name="email"-->
+                <!--                                placeholder="Enter email address"-->
+                <!--                                th:field="*{email}"-->
+                <!--                                type="email"-->
+                <!--                        />-->
+                <!--                        <p th:errors = "*{email}" class="text-danger"-->
+                <!--                           th:if="${#fields.hasErrors('email')}"></p>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="form-group mb-3">-->
+                <!--                        <label class="form-label">Password</label>-->
+                <!--                        <input-->
+                <!--                                class="form-control"-->
+                <!--                                id="password"-->
+                <!--                                name="password"-->
+                <!--                                placeholder="Enter password"-->
+                <!--                                th:field="*{password}"-->
+                <!--                                type="password"-->
+                <!--                        />-->
+                <!--                        <p th:errors = "*{password}" class="text-danger"-->
+                <!--                           th:if="${#fields.hasErrors('password')}"></p>-->
+                <!--                    </div>-->
+
+
+
+<!--                    <div th:each="index, tier : ${tiers}">-->
+<!--                        <hr>-->
+<!--                        <h4>Ticket Tier <span th:text="${index + 1}"></span></h4>-->
+<!--                        <div>-->
+<!--                            <label for="ticketType_[[${index}]]">Ticket Type:</label>-->
+<!--                            <input type="text" id="ticketType_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .ticketType" required>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="ticketPrice_[[${index}]]">Ticket Price:</label>-->
+<!--                            <input type="number" step="0.01" id="ticketPrice_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .ticketPrice" required>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <label for="availableTickets_[[${index}]]">Available Tickets:</label>-->
+<!--                            <input type="number" id="availableTickets_[[${index}]]" name="ticketTiers[[${index}]]-->
+<!--                .availableTickets" required>-->
+<!--                        </div>-->
+
+
+<!--                    </div>-->
+
+                    <button type="button" id="addTierButton">Add Ticket Tier</button>
+
+                    <button type="submit">Create Event</button>
+
+
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Register</button>
+                                        <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </body>
+                </html>
+
+
+
+<script>
+    let tierCount = 0; //global counter
+
+    document.getElementById('addTierButton').addEventListener('click', function() {
+      // Increment the tier count
+      tierCount++;
+
+      const tierTemplate = `
+        <hr>
+        <h4>Ticket Tier ${tierCount}</h4>
+        <div>
+          <label for="ticketType_${tierCount}">Ticket Type:</label>
+          <input type="text" id="ticketType_${tierCount}" name="ticketTiers[${tierCount - 1}].ticketType" required>
         </div>
-    </div>
-</div>
-</body>
-</html>
-<!--This was also made by https://www.javaguides.net/-->
+        <div>
+          <label for="ticketPrice_${tierCount}">Ticket Price:</label>
+          <input type="number" step="0.01" id="ticketPrice_${tierCount}" name="ticketTiers[${tierCount - 1}].ticketPrice" required>
+        </div>
+        <div>
+          <label for="availableTickets_${tierCount}">Available Tickets:</label>
+          <input type="number" id="availableTickets_${tierCount}" name="ticketTiers[${tierCount - 1}].availableTickets" required>
+        </div>
+      `;
+
+      const form = document.querySelector('form');
+      form.insertAdjacentHTML('beforeend', tierTemplate);
+    });
+</script>
+                <!--This was also made by https://www.javaguides.net/-->

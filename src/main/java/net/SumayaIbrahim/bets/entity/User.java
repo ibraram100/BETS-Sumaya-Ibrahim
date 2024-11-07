@@ -51,6 +51,8 @@ public class User {
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
     private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // event could have multiple TicketTiers
+    private List<Event> events = new ArrayList<>();
 
 
 }
