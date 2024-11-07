@@ -110,7 +110,6 @@ public class EventController {
     public String deleteEvent(@RequestParam Long eventID) {
         // deleting the given event id
         eventService.deleteEvent(eventID);
-        System.out.println("helllloooooooooooo");
         return "redirect:/events/getevents"; // Redirect to list page after deletion
     }
 

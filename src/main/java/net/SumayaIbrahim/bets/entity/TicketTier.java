@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -27,4 +29,7 @@ public class TicketTier {
     @ManyToOne // ticket tier could only have one event
     @JoinColumn(name = "event_id")
     private Event event;
+
+    @OneToMany(mappedBy = "ticketTier", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 }

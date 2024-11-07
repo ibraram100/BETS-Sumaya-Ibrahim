@@ -13,12 +13,15 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/index}">Basic Events Ticket System (BETS)</a>
+        <a class="navbar-brand" th:href="@{/index}">Basic Events Tickets System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
                 </li>
@@ -41,11 +44,42 @@
         </div>
     </div>
 </nav>
-<br /><br />
 <div class="container">
-    <div class="row">
-        <h1 class="text-center"> Basic Events Ticket System (BETS) </h1>
+    <div class="row col-md-10">
+        <h2>List of Available Events</h2>
     </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Event Name</th>
+            <th>Event Date</th>
+            <th>Event Location</th>
+            <th>Ticket Tiers</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "event : ${events}">
+            <td th:text = "${event.eventName}"></td>
+            <td th:text = "${event.eventDate}"></td>
+            <td th:text = "${event.location}"></td>
+            <td>
+                <ul>
+                    <li th:each="tier : ${event.ticketTiers}">
+                        <span th:text="${tier.ticketType}"></span> -
+                        <span th:text="${'$'+tier.ticketPrice}"></span> -
+                        <span th:text="${tier.availableTickets + ' Tickets'}"></span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/view/view-event(eventID=${event.eventID})}" class="btn btn-sm btn-info">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 </body>
+
 </html>

@@ -54,6 +54,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // event could have multiple TicketTiers
     private List<Event> events = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
+
 
 }
 // viola !!!, after running this code you should find "users" table in your db

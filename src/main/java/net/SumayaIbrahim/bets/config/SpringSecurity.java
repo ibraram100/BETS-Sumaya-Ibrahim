@@ -37,11 +37,13 @@ public class SpringSecurity {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index").permitAll()
-//                                .requestMatchers("/events/getevents").permitAll()
+                                .requestMatchers("/events/getevents").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
-//                                .requestMatchers("/events/create-event").hasRole("ADMIN")
-//                                .requestMatchers("/events/save-event").hasRole("ADMIN")
-                                .requestMatchers("/events/**").permitAll()
+                                .requestMatchers("/events/create-event").hasRole("ADMIN")
+                                .requestMatchers("/events/save-event").hasRole("ADMIN")
+                                .requestMatchers("/view/**").hasRole("ADMIN")
+
+
 
 
 

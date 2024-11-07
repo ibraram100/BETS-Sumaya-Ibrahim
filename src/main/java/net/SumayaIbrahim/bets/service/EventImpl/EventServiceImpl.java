@@ -51,11 +51,6 @@ public class EventServiceImpl implements EventService {
             // Update the existing event with the new data
             Event existingEvent = optionalEvent.get();
             existingEvent = modelMapper.map(eventDTO, Event.class);
-
-//            existingEvent.setEventName(event.getEventName());
-//            existingEvent.setEventDate(event.getEventDate());
-//            existingEvent.setLocation(event.getLocation());
-            // ... update other fields as needed
             eventRepository.save(existingEvent);
         }
         else

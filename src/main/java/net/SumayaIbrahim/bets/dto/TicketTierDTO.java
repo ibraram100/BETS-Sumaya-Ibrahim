@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.SumayaIbrahim.bets.entity.Event;
+import net.SumayaIbrahim.bets.entity.Ticket;
+import net.SumayaIbrahim.bets.entity.TicketTier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -17,4 +22,6 @@ public class TicketTierDTO {
     private float ticketPrice;
     private int availableTickets;
     private long eventID;
+    private List<Ticket> tickets = new ArrayList<>();
+
 }
