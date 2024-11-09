@@ -71,13 +71,13 @@ public class AuthController {
     }
 
     // Displaying all users
-    @GetMapping("/users")
-    public String allUsers(Model model)
-    {
-        List<User> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
+//    @GetMapping("/users")
+//    public String allUsers(Model model)
+//    {
+//        List<User> users = userService.findAllUsers();
+//        model.addAttribute("users", users);
+//        return "users";
+//    }
 
 }
 

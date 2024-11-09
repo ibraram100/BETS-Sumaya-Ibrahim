@@ -34,7 +34,7 @@ public class SpringSecurity {
                         authorize.requestMatchers("/register/**").permitAll()// means anyone can access the register link
                                 .requestMatchers("/index").permitAll() // anyone can access the homepage
                                 .requestMatchers("events/**").hasRole("ADMIN") // only admins can access the events
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/users/**").hasRole("ADMIN")
                                 .requestMatchers("/view/**").hasRole("ADMIN")
 
 

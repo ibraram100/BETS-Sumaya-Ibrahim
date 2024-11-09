@@ -12,6 +12,9 @@ import lombok.Setter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 
 // The setter and getter annotation allows us to use set and get methods without
 // actually writing it in the class, it just makes life a lot easier

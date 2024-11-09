@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // which provide methods for performing CRUD (Create, Read, Update, Delete) operations on your entities
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
-
+    User findByid(Long userId);
     User findByEmail(String email);
 
 }

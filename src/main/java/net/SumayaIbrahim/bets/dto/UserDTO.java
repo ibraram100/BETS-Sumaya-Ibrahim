@@ -21,4 +21,5 @@ public class UserDTO {
     private String lastName;
     private Date dateOfBirth;
     private String password;
+
 }

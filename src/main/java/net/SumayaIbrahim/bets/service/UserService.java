@@ -3,12 +3,13 @@ import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 // Just contains the interfaces for creating Users
 public interface UserService {
 
      UserDTO createUser (UserDTO userDTO);
-     void saveUser(UserDTO userDTO);
+     Optional<User> findUserById(Long userID);
 
      User findUserByEmail(String email);
 

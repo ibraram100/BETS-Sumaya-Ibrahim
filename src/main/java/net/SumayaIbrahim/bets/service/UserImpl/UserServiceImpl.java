@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 // needs more comments or something
 @Service
@@ -35,9 +36,10 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userDTO,User.class);
         // Basically saving the user to db
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Storing an encrypted password, since we don't want to store them in plain text
-        Role role = roleRepository.findByName("ROLE_ADMIN");
+        // By default, users are granted the Attendee role
+        Role role = roleRepository.findByName("ROLE_ATTENDEE"); // Checking if the role actually exists
         if(role == null){
-            role = checkRoleExist();
+            role = checkRoleExist("ROLE_ATTENDEE");
         }
         user.setRoles(Arrays.asList(role));
         User savedUser = userRepository.save(user);
@@ -46,19 +48,25 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private Role checkRoleExist(){
+
+
+    // Basically it creates a new role
+    private Role checkRoleExist(String roleName){
         Role role = new Role();
-        role.setName("ROLE_ADMIN");
+        role.setName(roleName);
         return roleRepository.save(role);
     }
 
+
     @Override
-    public void saveUser(UserDTO userDTO) {
+    public Optional<User> findUserById(Long userID) {
+        return userRepository.findById(userID);
 
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findUserByEmail(String email)
+    {
         return userRepository.findByEmail(email);
     }
 
