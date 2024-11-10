@@ -70,8 +70,23 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+
+    @Override
+    public UserDTO updateUser(UserDTO userDTO) {
+
+        if (userDTO != null)
+        {
+            User user = modelMapper.map(userDTO,User.class);
+
+            userRepository.save(user);
+        }
+       return null;
+    }
+
+
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
 }

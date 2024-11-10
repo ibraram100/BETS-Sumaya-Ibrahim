@@ -3,12 +3,15 @@ package net.SumayaIbrahim.bets.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.EventDTO;
+import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.EventRepository;
+import net.SumayaIbrahim.bets.repository.RoleRepository;
 import net.SumayaIbrahim.bets.repository.UserRepository;
 import net.SumayaIbrahim.bets.service.EventService;
+import net.SumayaIbrahim.bets.service.RoleService;
 import net.SumayaIbrahim.bets.service.TicketTierService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,7 @@ public class EventController {
     private UserRepository userRepository;
     private TicketTierService tierService;
     private ModelMapper modelMapper;
+    private RoleService roleService;
 //    @PostMapping("/create")
     // Basically receving an event and storing it in the db
     // Probably i should delete this one
@@ -117,8 +121,10 @@ public class EventController {
 
     @PostMapping("/update-event")
     public String updateEvent(@ModelAttribute EventDTO eventDTO) {
+
         // Update the event using the eventService
         eventService.updateEvent(eventDTO);
+
 
         // Redirect to the event list page or a success page
         return "redirect:/events/getevents";

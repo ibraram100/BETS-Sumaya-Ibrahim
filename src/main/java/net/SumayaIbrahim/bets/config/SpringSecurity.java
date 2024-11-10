@@ -35,6 +35,8 @@ public class SpringSecurity {
                                 .requestMatchers("/index").permitAll() // anyone can access the homepage
                                 .requestMatchers("events/**").hasRole("ADMIN") // only admins can access the events
                                 .requestMatchers("/users/**").hasRole("ADMIN")
+                                .requestMatchers("/users/edit-user/**").hasAnyRole("ADMIN", "EDITOR") // Allow admins and editors
+
                                 .requestMatchers("/view/**").hasRole("ADMIN")
 
 
@@ -45,7 +47,7 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users") // in case of a successful login, user will be taken to the link specified in here
+                                .defaultSuccessUrl("/index") // in case of a successful login, user will be taken to the link specified in here
                                 .permitAll()
                 ).logout(
                         logout -> logout
