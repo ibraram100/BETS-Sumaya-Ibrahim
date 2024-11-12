@@ -5,6 +5,7 @@ import net.SumayaIbrahim.bets.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,4 +17,10 @@ public class RoleService {
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
+
+    public List<Role> getRoleById(Long id)
+    {
+        return Collections.singletonList(roleRepository.getById(id));
+    }
+
 }

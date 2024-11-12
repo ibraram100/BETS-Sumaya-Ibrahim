@@ -15,4 +15,5 @@ public interface UserService {
      UserDTO updateUser(UserDTO userDTO);
 
      List<User> findAllUsers();
+     void deleteUser(Long userID);
 }

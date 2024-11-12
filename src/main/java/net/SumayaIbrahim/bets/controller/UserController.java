@@ -8,6 +8,7 @@ package net.SumayaIbrahim.bets.controller;
 
 
 import lombok.AllArgsConstructor;
+import net.SumayaIbrahim.bets.dto.RoleDTO;
 import net.SumayaIbrahim.bets.dto.UserDTO;
 import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.User;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,11 +88,29 @@ public class UserController {
 
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute UserDTO userDTO)
-    {
-        // For some reason the userID is 0 when i recive the object
+    public String updateUser(@ModelAttribute UserDTO userDTO) {
+        List<Role> roles = roleService.getRoleById(userDTO.getRoleID());
+
+        // Convert roles to RoleDTO using ModelMapper
+        List<RoleDTO> roleDTOs = new ArrayList<>();
+        for (Role role : roles) {
+            RoleDTO roleDTO = modelMapper.map(role, RoleDTO.class);
+            roleDTOs.add(roleDTO);
+        }
+
+        // Set the roleDTOs to the userDTO
+        userDTO.setRoles(roleDTOs);
         userService.updateUser(userDTO);
         return "redirect:/users/all-users";
+    }
+
+    // Delete a user
+    @GetMapping("delete")
+    public String deleteEvent(@RequestParam Long userID) {
+        // deleting the user based on their id
+        System.out.println("kkkk");
+        userService.deleteUser(userID);
+        return "redirect:/users/all-users"; // Redirect to users page after deletion
     }
 
 

@@ -73,9 +73,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(UserDTO userDTO) {
-
         if (userDTO != null)
         {
+            // We do this to encrypt the password
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             User user = modelMapper.map(userDTO,User.class);
 
             userRepository.save(user);
@@ -87,6 +88,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+
+    @Override
+    public void deleteUser(Long userID)
+    {
+        userRepository.deleteById(userID);
     }
 
 }

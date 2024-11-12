@@ -35,8 +35,8 @@ public class SpringSecurity {
                                 .requestMatchers("/index").permitAll() // anyone can access the homepage
                                 .requestMatchers("events/**").hasRole("ADMIN") // only admins can access the events
                                 .requestMatchers("/users/**").hasRole("ADMIN")
-                                .requestMatchers("/users/edit-user/**").hasAnyRole("ADMIN", "EDITOR") // Allow admins and editors
-
+                                .requestMatchers("/users/all-users/delete").hasRole("ADMIN")
+                                .requestMatchers("/users/edit-user/**").hasRole("ADMIN") // Allow admins
                                 .requestMatchers("/view/**").hasRole("ADMIN")
 
 
