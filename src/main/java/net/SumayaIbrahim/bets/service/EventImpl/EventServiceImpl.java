@@ -75,4 +75,10 @@ public class EventServiceImpl implements EventService {
 
 
     }
+
+    @Override
+    public List<EventDTO> getEventsByUserId(Long userId) {
+        List<Event> events = eventRepository.findByUserId(userId);
+        return events.stream().map((event) -> modelMapper.map(event,EventDTO.class)).collect(Collectors.toList());
+    }
 }

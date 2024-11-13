@@ -8,6 +8,8 @@ import net.SumayaIbrahim.bets.service.TicketService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TicketServiceImpl implements TicketService {
@@ -26,5 +28,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketDTO getTicketById(Long ticketID) {
         return null;
+    }
+
+    @Override
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
     }
 }

@@ -3,6 +3,7 @@ package net.SumayaIbrahim.bets.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.EventDTO;
+import net.SumayaIbrahim.bets.entity.Event;
 import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
@@ -34,27 +35,16 @@ public class EventController {
     private TicketTierService tierService;
     private ModelMapper modelMapper;
     private RoleService roleService;
-//    @PostMapping("/create")
-    // Basically receving an event and storing it in the db
-    // Probably i should delete this one
-//    public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO)
-//    {
-//        EventDTO savedEvent = eventService.createEvent(eventDTO);
-//        return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
-//    }
 
-    // Sending all the published events (works for api requests, probably gonna be removed)
-    @GetMapping("/allevents")
-    public ResponseEntity<List<EventDTO>> getAllEvents(){
-        List<EventDTO> events = eventService.GetAllEvents();
-        return new ResponseEntity<>(events, HttpStatus.OK);
-    }
 
-    // Listing all the events in a nice looking html page
+
+    // Listing all the events that were created by the user in a nice looking html page
     @GetMapping("/getevents")
-    public String getAllEvents(Model model)
+    public String getAllEvents(Model model, Principal principal)
     {
-        List<EventDTO> events = eventService.GetAllEvents();
+        // Principal only stores the user email, so we get user id by creating user object and extracting the id later, it's not smart but i couldn't get sessions to work
+        User user = userRepository.findByEmail(principal.getName());
+        List<EventDTO> events = eventService.getEventsByUserId(user.getId());
         model.addAttribute("events", events);
         return "events"; // it will go to events.html in resources folder, it will also send events to that file
     }
@@ -103,7 +93,18 @@ public class EventController {
 
     // Deleting an event
     @GetMapping("delete")
-    public String deleteEvent(@RequestParam Long eventID) {
+    public String deleteEvent(@RequestParam Long eventID, Principal principal, Model model)
+    {
+        // Principal only stores the user email, so we get user id by creating user object and extracting the id later, it's not smart but i couldn't get sessions to work
+        User user = userRepository.findByEmail(principal.getName());
+        EventDTO eventDTO = eventService.getEventById(eventID);
+        if (eventDTO.getUserId() != user.getId()) // meaning if the event isn't yours, you can't delete it !
+        {
+            String errorMsg = "You can't delete other people's events, not cool buckaroo ";
+            model.addAttribute("error",errorMsg);
+            return "womp-womp";
+        }
+
         // deleting the given event id
         eventService.deleteEvent(eventID);
         return "redirect:/events/getevents"; // Redirect to list page after deletion
@@ -119,12 +120,12 @@ public class EventController {
         return "edit-event";
     }
 
+
     @PostMapping("/update-event")
     public String updateEvent(@ModelAttribute EventDTO eventDTO) {
 
         // Update the event using the eventService
         eventService.updateEvent(eventDTO);
-
 
         // Redirect to the event list page or a success page
         return "redirect:/events/getevents";

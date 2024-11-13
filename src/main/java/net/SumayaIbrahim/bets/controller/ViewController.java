@@ -1,3 +1,5 @@
+// This Class is made to view the list of available events and allows attendees to buy tickets.
+
 package net.SumayaIbrahim.bets.controller;
 
 
@@ -28,6 +30,7 @@ public class ViewController {
     private UserService userService;
 
 
+    // Displays a list of all of the available tickets
     @GetMapping("/get-events")
     public String getAllEvents(Model model)
     {
