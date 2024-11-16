@@ -1,9 +1,6 @@
-<!--This page is intended for admins only, it allows admins to view all tickets-->
-
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Basic Events Ticket System (BETS)</title>
@@ -40,7 +37,8 @@
                     <a class="nav-link" th:href="@{/users}">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/tickets}">Tickets</a> </li>
+                    <a class="nav-link active" th:href="@{/tickets}">Tickets</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -53,9 +51,11 @@
         <thead class="table-dark">
         <tr>
             <th>Event Name</th>
-            <th>Ticket Holder</th> <th>Ticket Type</th>
+            <th>Ticket Holder</th>
+            <th>Ticket Type</th>
             <th>Price</th>
             <th>Purchase Date</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -65,7 +65,15 @@
             <td th:text="${ticket.ticketTier.ticketType}"></td>
             <td th:text="${'$'+ticket.ticketTier.ticketPrice}"></td>
             <td th:text="${ticket.purchaseDate != null ? #dates.format(ticket.purchaseDate, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}"></td>
-<!--            <td th:text="${#dates.format(ticket.purchaseDate, 'yyyy-MM-dd')}"></td> </tr>-->
+            <td>
+                <a th:href="@{/tickets/refund(ticketID=${ticket.id})}" class="btn btn-sm btn-danger">Refund</a>
+
+            <!--                <form th:href="@{/tickets/refund(ticketID=${ticket.id})}">-->
+<!--                    <button type="submit" class="btn btn-danger">Refund</button>-->
+<!--                </form>-->
+
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

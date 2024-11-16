@@ -9,5 +9,6 @@ public interface TicketService {
     TicketDTO createTicket(TicketDTO ticketDTO);
     TicketDTO getTicketById(Long ticketID);
     List<Ticket> getAllTickets();
+    List<Ticket>getTicketByUserId(Long userId);
 
 }

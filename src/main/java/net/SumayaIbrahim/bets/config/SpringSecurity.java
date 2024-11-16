@@ -41,6 +41,8 @@ public class SpringSecurity {
                                 .requestMatchers("view/view-event").permitAll()// Allowing anyone to view the event details
                                 .requestMatchers("/view/buy-ticket").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Attendees and admins to buy tickets
                                 .requestMatchers("/tickets/all-tickets").hasRole("ADMIN") // Only allowing Admins to view all tickets
+                                .requestMatchers("/tickets/my-tickets").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Admins to view all tickets
+                                .requestMatchers("/tickets/refund/**").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Admins to view all tickets
 
 
 

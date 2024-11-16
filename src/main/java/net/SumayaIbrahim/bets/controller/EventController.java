@@ -3,25 +3,22 @@ package net.SumayaIbrahim.bets.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.EventDTO;
-import net.SumayaIbrahim.bets.entity.Event;
-import net.SumayaIbrahim.bets.entity.Role;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.EventRepository;
-import net.SumayaIbrahim.bets.repository.RoleRepository;
+
 import net.SumayaIbrahim.bets.repository.UserRepository;
 import net.SumayaIbrahim.bets.service.EventService;
 import net.SumayaIbrahim.bets.service.RoleService;
 import net.SumayaIbrahim.bets.service.TicketTierService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -63,7 +60,7 @@ public class EventController {
         // it's basically like using a session, but with extra steps
         // i will probably implement proper sessions in the future
         eventDTO.setUserId(user.getId());
-//        System.out.println(eventDTO.getUserId());
+
         model.addAttribute("event",eventDTO);
         model.addAttribute("tier", ticketTierDTO);
         return "create-event";
@@ -74,10 +71,19 @@ public class EventController {
 
 
     @PostMapping("save-event")
-    public String saveEvent(@ModelAttribute("event") EventDTO eventDTO)
+    public String saveEvent(@ModelAttribute("event") EventDTO eventDTO, Model model)
     {
 
-        System.out.println("ffffffffff "+"xxxxxxxx");
+        // Checking the date of the entered event, it must be at least 24 hours ahead of the current time
+        LocalDate localDate = LocalDate.now();
+        LocalDate eventDate = eventDTO.getEventDate().toLocalDate();
+        if(eventDate.isBefore(localDate))
+        {
+            String errorMsg = "The event date must start in at least one day in the future";
+            model.addAttribute("error",errorMsg);
+            return "womp-womp";
+        }
+
         // This line is important, so we can get the latest event id, without it, we would just get id=0 because the db is responsible for the id numbers
         EventDTO savedEventDTO = eventService.createEvent(eventDTO);
         long eventID = savedEventDTO.getEventID();
@@ -113,9 +119,18 @@ public class EventController {
 
     // Editing an event
     @GetMapping("/edit")
-    public String editEvent(@RequestParam Long eventID, Model model)
+    public String editEvent(@RequestParam Long eventID, Model model, Principal principal)
     {
+        // Principal only stores the user email, so we get user id by creating user object and extracting the id later, it's not smart but i couldn't get sessions to work
+        User user = userRepository.findByEmail(principal.getName());
         EventDTO eventDTO = eventService.getEventById(eventID);
+        if (eventDTO.getUserId() != user.getId()) // meaning if the event isn't yours, you can't edit it !
+        {
+            String errorMsg = "You can't edit other people's events, not cool buckaroo ";
+            model.addAttribute("error",errorMsg);
+            return "womp-womp";
+        }
+        eventDTO = eventService.getEventById(eventID);
         model.addAttribute("event", eventDTO);
         return "edit-event";
     }
@@ -126,7 +141,6 @@ public class EventController {
 
         // Update the event using the eventService
         eventService.updateEvent(eventDTO);
-
         // Redirect to the event list page or a success page
         return "redirect:/events/getevents";
     }
