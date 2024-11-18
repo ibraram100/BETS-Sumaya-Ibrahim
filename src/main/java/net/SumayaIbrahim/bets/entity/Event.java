@@ -31,4 +31,7 @@ public class Event {
      @ManyToOne // event can have only one EventOrganizer
      @JoinColumn(name = "event_org_id")
      private User user;
+
+     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL , orphanRemoval = true)
+     private List<Ticket> tickets = new ArrayList<>();
 }

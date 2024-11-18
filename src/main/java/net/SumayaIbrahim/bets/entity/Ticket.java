@@ -29,7 +29,11 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // automatically populating the purchase date upon object creation
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+
     // Automatically populating the purchase date upon object creation
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP) // Specify that this is a timestamp

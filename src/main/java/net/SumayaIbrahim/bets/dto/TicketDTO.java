@@ -20,4 +20,5 @@ public class TicketDTO {
     private Long ticketTierId;
     private Long userId;
     private Date purchaseDate;
+    private Long eventId;
 }

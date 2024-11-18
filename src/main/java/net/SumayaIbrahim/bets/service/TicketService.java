@@ -4,11 +4,17 @@ import net.SumayaIbrahim.bets.dto.TicketDTO;
 import net.SumayaIbrahim.bets.entity.Ticket;
 
 import java.util.List;
+import java.util.Optional;
+
+
 
 public interface TicketService {
     TicketDTO createTicket(TicketDTO ticketDTO);
-    TicketDTO getTicketById(Long ticketID);
+    Optional<Ticket> getTicketById(Long ticketID);
     List<Ticket> getAllTickets();
     List<Ticket>getTicketByUserId(Long userId);
+    void deleteTicketById(Long ticketID);
+    public void flush();
+
 
 }

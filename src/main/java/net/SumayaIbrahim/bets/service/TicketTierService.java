@@ -6,5 +6,5 @@ public interface TicketTierService {
     TicketTierDTO createTicketTier(TicketTierDTO ticketTierDTO);
     TicketTierDTO getTierById(Long tierID);
     TicketTierDTO updateTier(TicketTierDTO tierDTO);
-
+    public void flush();
 }

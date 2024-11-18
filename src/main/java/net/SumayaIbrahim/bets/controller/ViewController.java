@@ -73,6 +73,7 @@ public class ViewController {
                 ticketDTO.setUserId(user.getId());
                 ticketDTO.setSold(true);
                 ticketDTO.setTicketTierId(tierID);
+                ticketDTO.setEventId(eventDTO.getEventID());
                 ticketService.createTicket(ticketDTO);
             }
             tierDTO.setAvailableTickets(tierDTO.getAvailableTickets()- numTickets);

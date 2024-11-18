@@ -22,5 +22,7 @@ public class EventDTO {
     private Date eventDate;
     private String location;
     private List<TicketTier> ticketTiers = new ArrayList<>();
+    private List<TicketDTO> tickets;
     private Long userId;
+
 }

@@ -55,7 +55,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // event could have multiple TicketTiers
     private List<Event> events = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
     private Long roleID;
 

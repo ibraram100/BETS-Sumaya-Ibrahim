@@ -1,5 +1,7 @@
 package net.SumayaIbrahim.bets.service.TicketTierImpl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
 import net.SumayaIbrahim.bets.entity.TicketTier;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class TicketTierServiceImpl implements TicketTierService {
     private TicketTierRepository tierRepository;
     private ModelMapper modelMapper;
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public TicketTierDTO createTicketTier(TicketTierDTO ticketTierDTO) {
         TicketTier ticketTier = modelMapper.map(ticketTierDTO,TicketTier.class);
@@ -41,7 +46,7 @@ public class TicketTierServiceImpl implements TicketTierService {
             // Update the existing tier with the new data
             TicketTier existingTicketTier = optionalTicketTier.get();
             existingTicketTier = modelMapper.map(tierDTO, TicketTier.class);
-            tierRepository.save(existingTicketTier);
+
         }
         else
         {
@@ -49,5 +54,11 @@ public class TicketTierServiceImpl implements TicketTierService {
             return null;
         }
         return null;
+    }
+
+    @Override
+    public void flush()
+    {
+        entityManager.flush();
     }
 }
