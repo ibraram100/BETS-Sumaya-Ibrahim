@@ -63,16 +63,7 @@ public class TicketController {
         return "all-tickets";
     }
 
-    @GetMapping("deleteTicket")
-    public void deleteTicket(Long ticketId)
-    {
-        Optional<Ticket> ticket = ticketService1.getTicketById(ticketId);
-        Ticket ticket1 = ticket.get();
-        ticket1.getEvent().getTickets().remove(ticket1);
-        ticket1.getUser().getTickets().remove(ticket1);
-        ticketService.deleteTicketById(ticketId);
 
-    }
 
     @GetMapping("refund")
     @Transactional
@@ -80,7 +71,7 @@ public class TicketController {
     {
 
         // There's a huge drama about some hibernate bug, some consider it a bug, and some say this is how hibernate works, and it's kind of dumb
-        // basically i should delete the ticket first, and then do the rest or otherwise the delete won't work for some reason
+        // Basically I have to delete the tickets parent, in this case it's the user
         // You can read more about it here https://github.com/spring-projects/spring-data-jpa/issues/1100
         // I spent a LOT of time trying to figure this out
 
@@ -88,24 +79,18 @@ public class TicketController {
         // Creating ticketDTO object
         Optional<Ticket> ticketDTO = ticketService.getTicketById(ticketID);
         // Converting optional to ticket
-
-
-
-
         if(ticketDTO.isPresent())
         {
-
             Ticket ticket = ticketDTO.get();
             TicketTierDTO ticketTierDTO = ticketTierService.getTierById(ticket.getTicketTier().getTicketTierID());
             ticketTierDTO.setAvailableTickets(ticketTierDTO.getAvailableTickets() + 1);
             // Updating the number of available tickets
             ticketTierService.updateTier(ticketTierDTO);
+            // removing the user from the ticket (it won't work without this)
+            ticket.setUser(null);
+            ticketRepository.save(ticket);
             // Deleting the ticket
-            ticketDTO = null;
-            ticket = null;
-            ticketService.flush();
             ticketService.deleteTicketById(ticketID);
-
             return "redirect:/tickets/my-tickets";
         }
         else
