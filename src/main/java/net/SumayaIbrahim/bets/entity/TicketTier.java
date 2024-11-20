@@ -2,13 +2,11 @@ package net.SumayaIbrahim.bets.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -29,7 +27,6 @@ public class TicketTier {
     @ManyToOne // ticket tier could only have one event
     @JoinColumn(name = "event_id")
     private Event event;
-
     @OneToMany(mappedBy = "ticketTier", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 }

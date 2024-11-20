@@ -4,10 +4,7 @@ package net.SumayaIbrahim.bets.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,6 +21,7 @@ import java.util.Set;
 // The NoArgsConstructor makes a constructor method that takes no argument to make an object
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 // The @Entity annotation in Spring Boot is used to mark a class as a JPA entity, which means it represents a table in a relational database
 @Entity
 @Table(name = "users")

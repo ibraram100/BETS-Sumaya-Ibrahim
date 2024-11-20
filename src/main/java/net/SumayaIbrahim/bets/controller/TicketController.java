@@ -67,7 +67,7 @@ public class TicketController {
 
     @GetMapping("refund")
     @Transactional
-    public String refundTicket(@RequestParam Long ticketID, Principal principal)
+    public String refundTicket(@RequestParam Long ticketID, Principal principal, Model model)
     {
 
         // There's a huge drama about some hibernate bug, some consider it a bug, and some say this is how hibernate works, and it's kind of dumb
@@ -75,13 +75,23 @@ public class TicketController {
         // You can read more about it here https://github.com/spring-projects/spring-data-jpa/issues/1100
         // I spent a LOT of time trying to figure this out
 
-        assert ticketID != null; // making sure ticketID is not null
         // Creating ticketDTO object
         Optional<Ticket> ticketDTO = ticketService.getTicketById(ticketID);
-        // Converting optional to ticket
+        // Creating user object
+        User user = userRepository.findByEmail(principal.getName());
+        // Checking if ticket actually exist
         if(ticketDTO.isPresent())
         {
             Ticket ticket = ticketDTO.get();
+            // Checking if the user who actually owns the ticket have made the refund request
+            if(user.getId()!= ticket.getUser().getId())
+            {
+                String errorMsg = "You can't refund someone else's tickets !";
+                model.addAttribute("errorMsg", errorMsg);
+                return "womp-womp";
+            }
+            Long tierId = ticket.getTicketTier().getTicketTierID();
+            System.out.println(tierId);
             TicketTierDTO ticketTierDTO = ticketTierService.getTierById(ticket.getTicketTier().getTicketTierID());
             ticketTierDTO.setAvailableTickets(ticketTierDTO.getAvailableTickets() + 1);
             // Updating the number of available tickets
@@ -95,6 +105,8 @@ public class TicketController {
         }
         else
         {
+            String errorMsg = "Ticket not found";
+            model.addAttribute("errorMsg", errorMsg);
             return "womp-womp";
         }
 

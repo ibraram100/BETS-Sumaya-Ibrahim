@@ -67,6 +67,7 @@ public class ViewController {
         }
         else
         {
+
             for(int i=0;i<numTickets;i++)
             {
                 TicketDTO ticketDTO = new TicketDTO();

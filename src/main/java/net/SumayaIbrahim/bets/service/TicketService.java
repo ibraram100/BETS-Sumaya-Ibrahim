@@ -16,5 +16,4 @@ public interface TicketService {
     void deleteTicketById(Long ticketID);
     public void flush();
 
-
 }
