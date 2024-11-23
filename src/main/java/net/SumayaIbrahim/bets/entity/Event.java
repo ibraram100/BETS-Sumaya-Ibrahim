@@ -34,4 +34,8 @@ public class Event {
 
      @OneToMany(mappedBy = "event", cascade = CascadeType.ALL , orphanRemoval = true)
      private List<Ticket> tickets = new ArrayList<>();
+
+     // Each event have one waiting List
+     @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     private WaitingList waitingList;
 }

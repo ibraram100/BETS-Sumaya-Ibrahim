@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 public class BetsBackendApplication {
 	@Bean
 	public ModelMapper modelMapper(){
+
 		return new ModelMapper();
 	}
 	public static void main(String[] args) {

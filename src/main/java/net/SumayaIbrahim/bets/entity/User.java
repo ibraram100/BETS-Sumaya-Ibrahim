@@ -59,6 +59,10 @@ public class User {
 
     private Long roleID;
 
+    // User can join more than one waiting list
+    @ManyToMany(mappedBy = "users")
+    private List<WaitingList> waitingLists;
+
 
 }
 // viola !!!, after running this code you should find "users" table in your db

@@ -88,7 +88,13 @@
                     <input type="number" class="form-control" id="numTickets" name="numTickets" min="1" required>
                     <div class="form-text">Please enter a number between 1 and the available tickets.</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Buy Tickets</button>
+<!--                <button th:if="${!availableTickets}" class="btn btn-primary" th:text="'Join Waiting List'"></button>-->
+                <button type="submit" class="btn btn-primary" th:if="${availableTickets}" th:text="'Buy Tickets'"></button>
+            </form>
+
+            <form th:if="${!availableTickets}" th:action="@{/waiting-lists/join}" method="get">
+                <input type="hidden" name="eventId" th:value="${event.eventID}" />
+                <button type="submit" class="btn btn-primary" th:text="'Join Waiting List'"></button>
             </form>
         </div>
     </div>

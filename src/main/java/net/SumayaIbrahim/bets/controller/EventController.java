@@ -75,11 +75,12 @@ public class EventController {
     {
 
         // Checking the date of the entered event, it must be at least 24 hours ahead of the current time
+        // So that Event Organizers can't set an event in the past
         LocalDate localDate = LocalDate.now();
         LocalDate eventDate = eventDTO.getEventDate().toLocalDate();
         if(eventDate.isBefore(localDate))
         {
-            String errorMsg = "The event date must start in at least one day in the future";
+            String errorMsg = "The event date must start in at least one day in the future !";
             model.addAttribute("error",errorMsg);
             return "womp-womp";
         }

@@ -104,5 +104,7 @@ public class TicketControllerTest {
         verify(ticketService).deleteTicketById(1L);
     }
 
+    // Test if there's at least 24 hours before the start of the event
+
 
 }

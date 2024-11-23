@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class TicketTierServiceImpl implements TicketTierService {
+    private final TicketTierRepository ticketTierRepository;
     private TicketTierRepository tierRepository;
     private ModelMapper modelMapper;
     @PersistenceContext
@@ -46,6 +47,7 @@ public class TicketTierServiceImpl implements TicketTierService {
             // Update the existing tier with the new data
             TicketTier existingTicketTier = optionalTicketTier.get();
             existingTicketTier = modelMapper.map(tierDTO, TicketTier.class);
+            ticketTierRepository.save(existingTicketTier);
 
         }
         else
