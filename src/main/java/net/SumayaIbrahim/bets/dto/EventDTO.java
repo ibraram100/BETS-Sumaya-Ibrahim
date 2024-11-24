@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.SumayaIbrahim.bets.entity.TicketTier;
+import net.SumayaIbrahim.bets.entity.WaitingList;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,5 +25,6 @@ public class EventDTO {
     private List<TicketTier> ticketTiers = new ArrayList<>();
     private List<TicketDTO> tickets;
     private Long userId;
+    private WaitingListDTO waitingList;
 
 }

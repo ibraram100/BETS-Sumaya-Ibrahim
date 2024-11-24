@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService {
         // Basically saving the user to db
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Storing an encrypted password, since we don't want to store them in plain text
         // By default, users are granted the Attendee role
-        Role role = roleRepository.findByName("ROLE_ATTENDEE"); // Checking if the role actually exists
+        Role role = roleRepository.findByName("ROLE_ADMIN"); // Checking if the role actually exists
         if(role == null){
-            role = checkRoleExist("ROLE_ATTENDEE");
+            role = checkRoleExist("ROLE_ADMIN");
         }
         user.setRoles(Arrays.asList(role));
         User savedUser = userRepository.save(user);

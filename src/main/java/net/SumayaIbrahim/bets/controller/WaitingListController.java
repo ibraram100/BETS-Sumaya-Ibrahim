@@ -9,6 +9,7 @@ import net.SumayaIbrahim.bets.entity.Event;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.entity.WaitingList;
 import net.SumayaIbrahim.bets.service.EventService;
+import net.SumayaIbrahim.bets.service.NotificationService;
 import net.SumayaIbrahim.bets.service.UserService;
 import net.SumayaIbrahim.bets.service.WaitingListService;
 import org.modelmapper.ModelMapper;
@@ -33,28 +34,33 @@ public class WaitingListController {
     private WaitingListService waitingListService;
     private UserService userService;
     private EventService eventService;
+    private NotificationService notificationService;
 
 
     @GetMapping("join")
     public String joinWaitingList(@RequestParam("eventId") long eventId, Model model, Principal principal)
     {
+        User user = userService.findUserByEmail(principal.getName());
+        long userId = user.getId();
+        EventDTO eventDTO = eventService.getEventById(eventId);
+        Event event = modelMapper.map(eventDTO, Event.class);
+
         // First check if there's an actual waiting list for the event
         if (waitingListService.findWaitingListByEventId(eventId) == null)// if no waiting list was found, we create a new waiting list
         {
             WaitingList waitingList = new WaitingList();
-            EventDTO eventDTO = eventService.getEventById(eventId);
-            Event event = modelMapper.map(eventDTO, Event.class);
+
             waitingList.setEvent(event);
             waitingList.setWaitingListName(event.getEventName()+" Waiting List");
-            long userId = userService.findUserByEmail(principal.getName()).getId();
             if (waitingList.getUsers() == null)
             {
                 waitingList.setUsers(new ArrayList<>());
             }
-            User user = userService.findUserByEmail(principal.getName());
             waitingList.getUsers().add(user);
             WaitingListDTO waitingListDTO = modelMapper.map(waitingList, WaitingListDTO.class);
             waitingListService.createWaitingList(waitingListDTO);
+            String msg = "You have joined the waiting list for "+event.getEventName()+" event, you will be notified when tickets are available.";
+            notificationService.createNotification(userId,msg);
             return "redirect:/index";
         }
         else {
@@ -63,18 +69,34 @@ public class WaitingListController {
             {
                 waitingList.setUsers(new ArrayList<>());
             }
+            // Making sure user is not already joined in the waiting list
+            if (waitingList.getUsers().contains(user))
+            {
+                String errorMsg = "You are already joined in the waiting list !";
+                model.addAttribute("error", errorMsg);
+                return "womp-womp";
+            }
             waitingList.getUsers().add(userService.findUserByEmail(principal.getName()));
             WaitingListDTO waitingListDTO = modelMapper.map(waitingList, WaitingListDTO.class);
             // This line is important, since ModelMapper can't convert a list of users objects, to list of long userIds
             waitingListDTO.setUserIds(waitingList.getUsers().stream().map(User::getId).toList());
-            waitingListService.updateWaitingList(waitingListDTO);
 
+            String msg = "You have joined the waiting list for "+event.getEventName()+" event, you will be notified when tickets are available.";
+            notificationService.createNotification(userId,msg);
+            waitingListService.updateWaitingList(waitingListDTO);
             return "redirect:/index";
         }
     }
 
     // Leaving a waiting list
     public String leaveWaitingList(@RequestParam long eventId, Model model, Principal principal)
+    {
+        return null;
+    }
+
+    // Sending notifications
+
+    public String notifyUsers()
     {
         return null;
     }

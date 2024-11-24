@@ -11,10 +11,7 @@ import net.SumayaIbrahim.bets.entity.Ticket;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.TicketRepository;
 import net.SumayaIbrahim.bets.repository.UserRepository;
-import net.SumayaIbrahim.bets.service.EventService;
-import net.SumayaIbrahim.bets.service.TicketService;
-import net.SumayaIbrahim.bets.service.TicketTierService;
-import net.SumayaIbrahim.bets.service.UserService;
+import net.SumayaIbrahim.bets.service.*;
 import org.hibernate.Cache;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +41,8 @@ public class TicketController {
     private TicketTierService ticketTierService;
     private EntityManager entityManager;
     private TicketRepository ticketRepository;
+    private NotificationService notificationService;
+
 
     @GetMapping("all-tickets")
     public String viewAllTickets(Model model) {
@@ -101,6 +100,16 @@ public class TicketController {
             ticketRepository.save(ticket);
             // Deleting the ticket
             ticketService.deleteTicketById(ticketID);
+            // Sending a message to all of the people in the waiting list when a ticket becomes available
+            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
+            if (eventDTO.getTickets().size() >0)
+            {
+                Long waitingListId = eventDTO.getWaitingList().getId();
+                String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
+                notificationService.sendToUsersInWaitingList(waitingListId,msg);
+            }
+
+
             return "redirect:/tickets/my-tickets";
         }
         else

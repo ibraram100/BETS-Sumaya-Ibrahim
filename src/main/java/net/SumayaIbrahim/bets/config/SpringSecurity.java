@@ -44,7 +44,8 @@ public class SpringSecurity {
                                 .requestMatchers("/tickets/my-tickets").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Admins to view all tickets
                                 .requestMatchers("/tickets/refund/**").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Admins to view all tickets
 
-                                .requestMatchers("/waiting-lists/**").hasAnyRole("ADMIN","ATTENDEE") // Only allowing Admins to view all tickets
+                                .requestMatchers("/waiting-lists/**").hasAnyRole("ADMIN","ATTENDEE")
+                                .requestMatchers("/notifications/**").hasAnyRole("ADMIN","ATTENDEE")
 
 
 

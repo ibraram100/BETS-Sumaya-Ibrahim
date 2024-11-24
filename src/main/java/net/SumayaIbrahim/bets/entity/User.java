@@ -53,16 +53,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // event could have multiple TicketTiers
     private List<Event> events = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
-
-
     private Long roleID;
 
     // User can join more than one waiting list
     @ManyToMany(mappedBy = "users")
     private List<WaitingList> waitingLists;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notifications;
 
 }
 // viola !!!, after running this code you should find "users" table in your db
