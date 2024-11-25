@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -89,6 +92,19 @@ public class TicketController {
                 model.addAttribute("errorMsg", errorMsg);
                 return "womp-womp";
             }
+
+            // Check if the current date is at least 24 hours before the event start date
+            LocalDate now = LocalDate.now();
+            Date eventStartDate = ticket.getEvent().getEventDate();
+            LocalDate eventStartLocalDate = eventStartDate.toLocalDate();
+            long daysUntilEvent = ChronoUnit.DAYS.between(now, eventStartLocalDate);
+            if (daysUntilEvent <= 1)
+            {
+                String errorMsg = "Tickets can only be refunded more than 24 hours before the event start date!";
+                model.addAttribute("errorMsg", errorMsg); return "womp-womp";
+            }
+
+
             Long tierId = ticket.getTicketTier().getTicketTierID();
             System.out.println(tierId);
             TicketTierDTO ticketTierDTO = ticketTierService.getTierById(ticket.getTicketTier().getTicketTierID());
@@ -101,13 +117,13 @@ public class TicketController {
             // Deleting the ticket
             ticketService.deleteTicketById(ticketID);
             // Sending a message to all of the people in the waiting list when a ticket becomes available
-            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
-            if (eventDTO.getTickets().size() >0)
-            {
-                Long waitingListId = eventDTO.getWaitingList().getId();
-                String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
-                notificationService.sendToUsersInWaitingList(waitingListId,msg);
-            }
+//            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
+//            if (eventDTO.getTickets().size() >0)
+//            {
+//                Long waitingListId = eventDTO.getWaitingList().getId();
+//                String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
+//                notificationService.sendToUsersInWaitingList(waitingListId,msg);
+//            }
 
 
             return "redirect:/tickets/my-tickets";

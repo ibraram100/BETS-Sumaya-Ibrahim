@@ -1,15 +1,13 @@
 package net.SumayaIbrahim.bets.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
@@ -38,4 +36,6 @@ public class Event {
      // Each event have one waiting List
      @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      private WaitingList waitingList;
+
+
 }

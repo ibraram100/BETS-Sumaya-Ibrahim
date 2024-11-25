@@ -40,6 +40,13 @@ public class WaitingListController {
     @GetMapping("join")
     public String joinWaitingList(@RequestParam("eventId") long eventId, Model model, Principal principal)
     {
+
+        // Checking if the event exists
+        if (eventService.getEventById(eventId) == null) {
+            String errorMsg = "Event was not found!";
+            model.addAttribute("error", errorMsg);
+            return "womp-womp";
+        }
         User user = userService.findUserByEmail(principal.getName());
         long userId = user.getId();
         EventDTO eventDTO = eventService.getEventById(eventId);
@@ -72,7 +79,7 @@ public class WaitingListController {
             // Making sure user is not already joined in the waiting list
             if (waitingList.getUsers().contains(user))
             {
-                String errorMsg = "You are already joined in the waiting list !";
+                String errorMsg = "You are already joined in the waiting list!";
                 model.addAttribute("error", errorMsg);
                 return "womp-womp";
             }

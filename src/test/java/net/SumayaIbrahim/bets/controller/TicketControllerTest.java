@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
+import net.SumayaIbrahim.bets.entity.Event;
 import net.SumayaIbrahim.bets.entity.Ticket;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.User;
@@ -18,6 +19,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import java.security.Principal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Optional;
 
 public class TicketControllerTest {
@@ -86,12 +91,23 @@ public class TicketControllerTest {
 
         TicketTier ticketTier = new TicketTier();
         ticketTier.setTicketTierID(1L);
+
         ticket.setTicketTier(ticketTier);
+
+        Date eventStartDate = new Date(System.currentTimeMillis() + 48 * 60 * 60 * 1000); // 48 hours from now which is 2 days,
+        // anything lower will be considered one day, since the date format doesn't contain hours and minutes
+
+        Event event = new Event();
+        event.builder().eventID(1L).build();
+        event.setEventDate(eventStartDate);
+        ticket.setEvent(event);
 
         User ticketUser = User.builder().id(1L).build();
         ticket.setUser(ticketUser);
 
         TicketTierDTO ticketTierDTO = new TicketTierDTO();
+        ticketTierDTO.setTicketTierID(1L);
+        ticketTierDTO.setAvailableTickets(1);
         User currentUser = User.builder().id(1L).build();
         when(ticketService.getTicketById(anyLong())).thenReturn(Optional.of(ticket));
         when(userRepository.findByEmail(anyString())).thenReturn(currentUser);
@@ -105,6 +121,44 @@ public class TicketControllerTest {
     }
 
     // Test if there's at least 24 hours before the start of the event
+    @Test
+    public void testRefundTicket_TooLate()
+    {
+        Ticket ticket = new Ticket();
+
+        Date eventStartDate = new Date(System.currentTimeMillis() + 23 * 60 * 60 * 1000); // 23 hours from now
+        Event event = new Event();
+        event.builder().eventID(1L).eventDate(eventStartDate).build();
+        event.setEventDate(eventStartDate);
+
+        TicketTier ticketTier = new TicketTier();
+        ticketTier.setTicketTierID(1L);
+        ticketTier.setEvent(event);
+
+        ticket.setTicketTier(ticketTier);
+
+        User ticketUser = User.builder().id(1L).build();
+        ticket.setUser(ticketUser);
+        ticket.setEvent(event);
+
+        TicketTierDTO ticketTierDTO = new TicketTierDTO();
+        ticketTierDTO.setTicketTierID(1L);
+        ticketTierDTO.setAvailableTickets(1);
+        ticketTierDTO.setEventID(event.getEventID());
+
+        User currentUser = User.builder().id(1L).build();
+
+        when(ticketService.getTicketById(anyLong())).thenReturn(Optional.of(ticket));
+        when(userRepository.findByEmail(anyString())).thenReturn(currentUser);
+        when(ticketTierService.getTierById(anyLong())).thenReturn(ticketTierDTO);
+        when(principal.getName()).thenReturn("user@example.com");
+        String viewName = ticketController.refundTicket(1L, principal, model);
+        assertEquals("womp-womp", viewName);
+        verify(model).addAttribute(eq("errorMsg"),
+                eq("Tickets can only be refunded more than 24 hours before the event start date!"));
+        verify(ticketRepository, never()).delete(ticket);
+
+    }
 
 
 }
