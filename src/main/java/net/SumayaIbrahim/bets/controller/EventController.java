@@ -48,7 +48,7 @@ public class EventController {
 
     // Just taking the user to the create event form
     @GetMapping("create-event")
-    public String showEventCreationForm(Model model, HttpSession session, Principal principal) // Session is used to map the event to it's creator's id
+    public String showEventCreationForm(Model model, Principal principal) // Session is used to map the event to it's creator's id
     {
         // we store the email address of the current logged in user who just enterd /events/create-event
         String userEmail = principal.getName();

@@ -10,16 +10,15 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import net.SumayaIbrahim.bets.dto.EventDTO;
 import net.SumayaIbrahim.bets.dto.WaitingListDTO;
 import net.SumayaIbrahim.bets.entity.Event;
+import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.entity.WaitingList;
-import net.SumayaIbrahim.bets.service.EventService;
-import net.SumayaIbrahim.bets.service.NotificationService;
-import net.SumayaIbrahim.bets.service.UserService;
-import net.SumayaIbrahim.bets.service.WaitingListService;
+import net.SumayaIbrahim.bets.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +58,9 @@ public class WaitingListControllerTest {
 
     @Mock
     private Principal principal;
-
+    
+    @Mock
+    private TicketTierService ticketTierService;
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(waitingListController).build();
@@ -180,6 +181,40 @@ public class WaitingListControllerTest {
         verify(waitingListService, never()).createWaitingList(any(WaitingListDTO.class));
         verify(notificationService, never()).createNotification(eq(userId), anyString());
     }
+
+    // the system should not allow creating a waiting list for an event that has avilable tickets
+    @Test
+    void testJoinWaitingList_WhenEventHasTickets() {
+        long eventId = 1L;
+        long userId = 1L;
+        String userEmail = "user@example.com";
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setEventID(eventId);
+        eventDTO.setEventName("Sample Event");
+        User user = new User();
+        user.setId(userId);
+        user.setEmail(userEmail);
+        Event event = new Event();
+
+        TicketTier ticketTier = new TicketTier();
+        ticketTier.setTicketTierID(1L);
+        ticketTier.setAvailableTickets(10); // Event has tickets available
+        ticketTier.setEvent(event);
+
+        event.setTicketTiers(Collections.singletonList(ticketTier));
+        eventDTO.setTicketTiers(Collections.singletonList(ticketTier));
+
+        when(eventService.getEventById(anyLong())).thenReturn(eventDTO);
+//
+        String viewName = waitingListController.joinWaitingList(eventId, model, principal);
+
+        assertEquals("womp-womp", viewName);
+        verify(model).addAttribute(eq("error"), eq("You can't join a waiting list!, there's tickets available!"));
+        verify(waitingListService, never()).createWaitingList(any(WaitingListDTO.class));
+        verify(notificationService, never()).createNotification(eq(userId), anyString());
+    }
+
+
 
 
 

@@ -34,7 +34,19 @@ public class NotificationServiceImpl implements NotificationService {
 
 
 
-    public void createNotification(Long userId, String message) {
+    public void createNotification(Long userId, String message)
+    {
+        // Checking if user exists
+        if (userService.findUserById(userId).isEmpty())
+        {
+            // if the user doesn't exist, just don't create the notification
+            return;
+        }
+        // Checking if the message is empty, or just full of spaces which is empty too
+        if (message == null || message.trim().isEmpty())
+        {
+            throw new IllegalArgumentException("Message cannot be null or empty");
+        }
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setRead(false);

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.EventDTO;
 import net.SumayaIbrahim.bets.dto.WaitingListDTO;
 import net.SumayaIbrahim.bets.entity.Event;
+import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.entity.WaitingList;
 import net.SumayaIbrahim.bets.service.EventService;
@@ -47,6 +48,22 @@ public class WaitingListController {
             model.addAttribute("error", errorMsg);
             return "womp-womp";
         }
+        else {
+            EventDTO eventDTO = eventService.getEventById(eventId);
+            int sum = 0;
+            for (TicketTier ticketTier :eventDTO.getTicketTiers())
+            {
+                sum = sum+ticketTier.getAvailableTickets();
+            }
+            if (sum>0)
+            {
+                String errorMsg = "You can't join a waiting list!, there's tickets available!";
+                model.addAttribute("error", errorMsg);
+                return "womp-womp";
+            }
+        }
+        // Checking if the event has no tickets
+
         User user = userService.findUserByEmail(principal.getName());
         long userId = user.getId();
         EventDTO eventDTO = eventService.getEventById(eventId);

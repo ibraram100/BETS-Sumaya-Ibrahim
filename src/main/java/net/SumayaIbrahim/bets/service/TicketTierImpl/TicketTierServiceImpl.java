@@ -10,6 +10,7 @@ import net.SumayaIbrahim.bets.service.TicketTierService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,6 +58,19 @@ public class TicketTierServiceImpl implements TicketTierService {
         }
         return null;
     }
+
+    @Override
+    public TicketTier getTicketTierByEventId(long eventId) {
+                List<TicketTier> ticketTiers = ticketTierRepository.findByEventID(eventId);
+                if (ticketTiers.isEmpty()) {
+                    return null;
+                }
+                // Assuming an event can have multiple ticket tiers, return the first one found
+                return ticketTiers.get(0);
+            }
+
+
+
 
     @Override
     public void flush()
