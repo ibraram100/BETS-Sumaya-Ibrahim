@@ -89,7 +89,7 @@ public class TicketController {
             if(user.getId()!= ticket.getUser().getId())
             {
                 String errorMsg = "You can't refund someone else's tickets !";
-                model.addAttribute("errorMsg", errorMsg);
+                model.addAttribute("error", errorMsg);
                 return "womp-womp";
             }
 
@@ -101,7 +101,7 @@ public class TicketController {
             if (daysUntilEvent <= 1)
             {
                 String errorMsg = "Tickets can only be refunded more than 24 hours before the event start date!";
-                model.addAttribute("errorMsg", errorMsg); return "womp-womp";
+                model.addAttribute("error", errorMsg); return "womp-womp";
             }
 
 
@@ -117,13 +117,13 @@ public class TicketController {
             // Deleting the ticket
             ticketService.deleteTicketById(ticketID);
             // Sending a message to all of the people in the waiting list when a ticket becomes available
-//            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
-//            if (eventDTO.getTickets().size() >0)
-//            {
-//                Long waitingListId = eventDTO.getWaitingList().getId();
-//                String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
-//                notificationService.sendToUsersInWaitingList(waitingListId,msg);
-//            }
+            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
+            if (eventDTO.getTickets().size() >0)
+            {
+                Long waitingListId = eventDTO.getWaitingList().getId();
+                String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
+                notificationService.sendToUsersInWaitingList(waitingListId,msg);
+            }
 
 
             return "redirect:/tickets/my-tickets";
@@ -131,7 +131,7 @@ public class TicketController {
         else
         {
             String errorMsg = "Ticket not found";
-            model.addAttribute("errorMsg", errorMsg);
+            model.addAttribute("error", errorMsg);
             return "womp-womp";
         }
 

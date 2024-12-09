@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TicketTierRepository extends JpaRepository<TicketTier, Long> {
 
-    List<TicketTier> findByEventID(long eventId);
+//    List<TicketTier> findByEventId(long eventId);
+    List<TicketTier> findByEventEventID(Long eventId);
 }

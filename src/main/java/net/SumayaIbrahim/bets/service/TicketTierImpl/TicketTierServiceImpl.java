@@ -61,7 +61,7 @@ public class TicketTierServiceImpl implements TicketTierService {
 
     @Override
     public TicketTier getTicketTierByEventId(long eventId) {
-                List<TicketTier> ticketTiers = ticketTierRepository.findByEventID(eventId);
+                List<TicketTier> ticketTiers = ticketTierRepository.findByEventEventID(eventId);
                 if (ticketTiers.isEmpty()) {
                     return null;
                 }
