@@ -63,7 +63,7 @@ public class TicketControllerTest {
         // Making sure the ticket controller returns "womp-womp"
         assertEquals("womp-womp", viewName);
         // Making sure that model has the attribute errorMsg equals "Ticket not found"
-        verify(model).addAttribute(eq("errorMsg"), eq("Ticket not found"));
+        verify(model).addAttribute(eq("error"), eq("Ticket not found"));
     }
 
     // This test makes sure that no user can refund other user's tickets
@@ -81,7 +81,7 @@ public class TicketControllerTest {
         String viewName = ticketController.refundTicket(1L, principal, model);
 
         assertEquals("womp-womp", viewName);
-        verify(model).addAttribute(eq("errorMsg"), eq("You can't refund someone else's tickets !"));
+        verify(model).addAttribute(eq("error"), eq("You can't refund someone else's tickets !"));
     }
 
     @Test
@@ -154,7 +154,7 @@ public class TicketControllerTest {
         when(principal.getName()).thenReturn("user@example.com");
         String viewName = ticketController.refundTicket(1L, principal, model);
         assertEquals("womp-womp", viewName);
-        verify(model).addAttribute(eq("errorMsg"),
+        verify(model).addAttribute(eq("error"),
                 eq("Tickets can only be refunded more than 24 hours before the event start date!"));
         verify(ticketRepository, never()).delete(ticket);
 

@@ -118,7 +118,7 @@ public class TicketController {
             ticketService.deleteTicketById(ticketID);
             // Sending a message to all of the people in the waiting list when a ticket becomes available
             EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
-            if (eventDTO.getTickets().size() >0)
+            if (eventDTO.getTickets().isEmpty())
             {
                 Long waitingListId = eventDTO.getWaitingList().getId();
                 String msg = "There's avialable tickets at "+ eventDTO.getEventName()+" Hurry and buy tickets now !";
