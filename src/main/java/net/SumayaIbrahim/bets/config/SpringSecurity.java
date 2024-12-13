@@ -47,6 +47,9 @@ public class SpringSecurity {
                                 .requestMatchers("/waiting-lists/**").hasAnyRole("ADMIN","ATTENDEE")
                                 .requestMatchers("/notifications/**").hasAnyRole("ADMIN","ATTENDEE")
 
+                                .requestMatchers("/reviews/**").hasAnyRole("ADMIN","ATTENDEE")
+
+
 
 
 

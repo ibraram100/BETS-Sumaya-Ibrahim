@@ -39,6 +39,7 @@ public class TicketController {
     private TicketService ticketService1;
 
     private UserRepository userRepository;
+    @Autowired
     private EventService eventService;
     private ModelMapper modelMapper;
     private TicketTierService ticketTierService;
@@ -117,7 +118,8 @@ public class TicketController {
             // Deleting the ticket
             ticketService.deleteTicketById(ticketID);
             // Sending a message to all of the people in the waiting list when a ticket becomes available
-            EventDTO eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
+            EventDTO eventDTO = new EventDTO();
+            eventDTO = eventService.getEventById(ticketTierDTO.getEventID());
             if (eventDTO.getTickets().isEmpty())
             {
                 Long waitingListId = eventDTO.getWaitingList().getId();

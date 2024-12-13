@@ -37,5 +37,8 @@ public class Event {
      @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      private WaitingList waitingList;
 
+     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+     private List<EventReview> eventReviews;
+
 
 }

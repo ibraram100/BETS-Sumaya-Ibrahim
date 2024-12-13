@@ -104,6 +104,39 @@
     </div>
 </div>
 
+
+<!-- Leave a Review Section -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Leave a Review</h3>
+            <form th:action="@{/reviews/post-review}" th:method="post">
+                <div class="mb-3">
+                    <label for="reviewerName" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="reviewerName" name="reviewerName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="stars" class="form-label">Rating</label>
+                    <select class="form-select" id="stars" name="stars" required>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Your Review</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                </div>
+                    <input type="hidden" id="eventID" name="eventID" th:value="${event.eventID}" />
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 </html>

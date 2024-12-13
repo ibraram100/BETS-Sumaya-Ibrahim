@@ -10,6 +10,7 @@ import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.User;
 import net.SumayaIbrahim.bets.repository.TicketRepository;
 import net.SumayaIbrahim.bets.repository.UserRepository;
+import net.SumayaIbrahim.bets.service.EventService;
 import net.SumayaIbrahim.bets.service.TicketService;
 import net.SumayaIbrahim.bets.service.TicketTierService;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,9 @@ public class TicketControllerTest {
 
     @Mock
     private TicketService ticketService;
+
+    @Mock
+    private EventService eventService;
 
     @Mock
     private UserRepository userRepository;
@@ -99,15 +103,19 @@ public class TicketControllerTest {
 
         Event event = new Event();
         event.builder().eventID(1L).build();
+        event.setEventID(1L);
         event.setEventDate(eventStartDate);
         ticket.setEvent(event);
 
         User ticketUser = User.builder().id(1L).build();
         ticket.setUser(ticketUser);
 
+        ticketTier.setEvent(event);
+
         TicketTierDTO ticketTierDTO = new TicketTierDTO();
         ticketTierDTO.setTicketTierID(1L);
         ticketTierDTO.setAvailableTickets(1);
+        ticketTierDTO.setEventID(1L);
         User currentUser = User.builder().id(1L).build();
         when(ticketService.getTicketById(anyLong())).thenReturn(Optional.of(ticket));
         when(userRepository.findByEmail(anyString())).thenReturn(currentUser);
