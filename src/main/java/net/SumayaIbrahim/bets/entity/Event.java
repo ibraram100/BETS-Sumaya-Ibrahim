@@ -40,5 +40,10 @@ public class Event {
      @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
      private List<EventReview> eventReviews;
 
+     public void addReview(EventReview eventReview)
+     {
+          eventReviews.add(eventReview);
+     }
+
 
 }

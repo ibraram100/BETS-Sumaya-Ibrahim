@@ -23,6 +23,9 @@ public class EventReview {
     @Column(name = "user_id")
     private long userId; // the user who left the comment
 
+    @Column(name = "reviewer_name")
+    private String reviewerName;
+
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;

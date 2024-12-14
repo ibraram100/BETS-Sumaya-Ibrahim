@@ -17,13 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
 @RequestMapping("/reviews")
 public class EventReviewController {
     @Autowired
-    EventReviewService eventreviewService;
+    EventReviewService eventReviewService;
     @Autowired
     EventService eventService;
     @Autowired
@@ -41,11 +42,17 @@ public class EventReviewController {
             model.addAttribute("womp-womp","event not found !");
             return "womp-womp";
         }
+        EventReview eventReview = modelMapper.map(eventReviewDTO,EventReview.class);
+        eventDTO.addReview(eventReview);
         Event event = modelMapper.map(eventDTO,Event.class);
+
         User user = userService.findUserByEmail(principal.getName());
+        eventReview.setEvent(event);
+        eventReview.setUserId(user.getId());
         eventReviewDTO.setEvent(event);
-        eventReviewDTO.setUserId(user.getId());
-        eventreviewService.createReview(eventReviewDTO);
+//        eventReviewService.createReview(eventReviewDTO);
+//        EventReview eventReview = modelMapper.map(eventReviewDTO,EventReview.class);
+        eventService.updateEvent(eventDTO);
         return "/index";
 //        return reviewService.createReview(eventReview);
     }

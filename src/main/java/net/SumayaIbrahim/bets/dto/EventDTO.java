@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.SumayaIbrahim.bets.entity.EventReview;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.WaitingList;
 
@@ -26,5 +27,11 @@ public class EventDTO {
     private List<TicketDTO> tickets;
     private Long userId;
     private WaitingListDTO waitingList;
+    private List<EventReview> eventReviews;
+
+    public void addReview(EventReview eventReview)
+    {
+        eventReviews.add(eventReview);
+    }
 
 }

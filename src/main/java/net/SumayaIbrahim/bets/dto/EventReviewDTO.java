@@ -19,5 +19,6 @@ public class EventReviewDTO {
     private String comment;
     private long userId; // the user who left the comment
     private Event event;
+    private String reviewerName;
 }
 
