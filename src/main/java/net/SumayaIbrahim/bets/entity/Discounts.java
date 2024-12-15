@@ -24,6 +24,4 @@ public class Discounts {
     @ManyToOne //discounts can be applied to any ticket
     @JoinColumn(name= "ticket_id")
     private Ticket ticket;
-
-
 }

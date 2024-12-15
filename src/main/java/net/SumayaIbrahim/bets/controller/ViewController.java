@@ -60,7 +60,7 @@ public class ViewController {
 
         model.addAttribute("availableTickets", availableTickets);
         model.addAttribute("event",event);
-
+        model.addAttribute("reviews",event.getEventReviews());
         return "buy-ticket2";
     }
 
