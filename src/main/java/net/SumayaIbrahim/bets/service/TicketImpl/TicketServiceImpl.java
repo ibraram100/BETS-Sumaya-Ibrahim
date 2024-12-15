@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import net.SumayaIbrahim.bets.dto.TicketDTO;
 import net.SumayaIbrahim.bets.entity.Ticket;
 import net.SumayaIbrahim.bets.repository.TicketRepository;
+import net.SumayaIbrahim.bets.service.DiscountFactory;
+import net.SumayaIbrahim.bets.service.DiscountStrategy;
 import net.SumayaIbrahim.bets.service.TicketService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class TicketServiceImpl implements TicketService {
     private ModelMapper modelMapper;
     private TicketRepository ticketRepository;
+    private DiscountFactory discountFactory;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -50,6 +53,12 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void deleteTicketById(Long ticketID) {
         ticketRepository.deleteById(ticketID);
+    }
+
+    @Override
+    public double calculatePrice(double ticketPrice, String discountType) {
+        DiscountStrategy discountStrategy = discountFactory.chooseDiscount(discountType);
+        return discountStrategy.calculateDiscount(ticketPrice);
     }
 
     @Override

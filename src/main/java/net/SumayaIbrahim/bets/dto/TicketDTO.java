@@ -17,6 +17,7 @@ public class TicketDTO {
     private Long id;
     boolean isSold;
     boolean isExpired;
+    private double price;
     private Long ticketTierId;
     private Long userId;
     private Date purchaseDate;

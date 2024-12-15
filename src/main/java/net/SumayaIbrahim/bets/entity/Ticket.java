@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,6 +25,8 @@ public class Ticket {
     boolean isExpired;
     @ManyToOne
     private TicketTier ticketTier;
+
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -42,6 +45,6 @@ public class Ticket {
 
     //each ticket has several discount options
     @OneToMany (mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Discounts discountsList;
+    private List<Discounts> discountsList;
 
 }

@@ -14,6 +14,7 @@ public interface TicketService {
     List<Ticket> getAllTickets();
     List<Ticket>getTicketByUserId(Long userId);
     void deleteTicketById(Long ticketID);
+    public double calculatePrice(double ticketPrice, String discountType);
     public void flush();
 
 }
