@@ -1,4 +1,4 @@
-package net.SumayaIbrahim.bets.service;
+/package net.SumayaIbrahim.bets.service;
 
 public class DiscountSenior implements DiscountsFactory {
     public double calculateDiscount(double ticketPrice) {
