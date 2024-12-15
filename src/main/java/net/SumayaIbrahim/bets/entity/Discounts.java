@@ -22,7 +22,7 @@ public class Discounts {
     @Column(name= "discount_amount")
     private float discount_amount;
     @ManyToOne //discounts can be applied to any ticket
-    @JoinColumn(name= "tickets")
+    @JoinColumn(name= "ticket_id")
     private Ticket ticket;
 
 

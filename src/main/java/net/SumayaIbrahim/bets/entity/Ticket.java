@@ -40,4 +40,8 @@ public class Ticket {
     @CreationTimestamp
     private Date purchaseDate;
 
+    //each ticket has several discount options
+    @OneToMany (mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Discounts discountsList;
+
 }
