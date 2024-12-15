@@ -14,5 +14,5 @@ public class DiscountsDTO {
     private long discount_id;
     private String discount_type;
     private float discount_amount;
-    private TicketDTO ticket;
+    private long ticketId;
 }
