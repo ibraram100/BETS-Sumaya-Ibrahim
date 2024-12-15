@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface DiscountsRepository extends JpaRepository<Discounts, Long>{
     Discounts findById (long id);
-    List<Discounts> findByTicketID (long ticketId);
 }

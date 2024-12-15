@@ -87,6 +87,18 @@
                         </option>
                     </select>
                 </div>
+
+                <div class="mb-3">
+                    <label for="discountType" class="form-label">Choose Discount Type:</label>
+                    <select class="form-select" id="discountType" name="discountType" required>
+                        <option value="" selected>None</option>
+                        <option value="military">Military</option>
+                        <option value="student">Student</option>
+                        <option value="senior">Senior</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
+
                 <div class="mb-3">
                     <label for="numTickets" class="form-label">Number of Tickets:</label>
                     <input type="number" class="form-control" id="numTickets" name="numTickets" min="1" required>

@@ -10,10 +10,7 @@ import net.SumayaIbrahim.bets.dto.TicketDTO;
 import net.SumayaIbrahim.bets.dto.TicketTierDTO;
 import net.SumayaIbrahim.bets.entity.TicketTier;
 import net.SumayaIbrahim.bets.entity.User;
-import net.SumayaIbrahim.bets.service.EventService;
-import net.SumayaIbrahim.bets.service.TicketService;
-import net.SumayaIbrahim.bets.service.TicketTierService;
-import net.SumayaIbrahim.bets.service.UserService;
+import net.SumayaIbrahim.bets.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +26,7 @@ public class ViewController {
     private TicketTierService tierService;
     private TicketService ticketService;
     private UserService userService;
+    private DiscountFactory discountFactory;
 
 
     // Displays a list of all of the available tickets
@@ -68,6 +66,7 @@ public class ViewController {
     @PostMapping("/buy-ticket")
     public String buyTicket(@RequestParam Long eventID, HttpServletRequest request,
                             @RequestParam Integer numTickets,
+                            @RequestParam String discountType,
                             Principal principal,
                             Model model)
     {
@@ -86,6 +85,10 @@ public class ViewController {
         }
         else
         {
+            // Calculate discount price
+             double originalPrice = tierDTO.getTicketPrice();
+             discountType = "discount"+discountType;
+             double finalPrice = ticketService.calculatePrice(originalPrice, discountType) * numTickets;
             for(int i=0;i<numTickets;i++)
             {
                 TicketDTO ticketDTO = new TicketDTO();
@@ -93,6 +96,7 @@ public class ViewController {
                 ticketDTO.setSold(true);
                 ticketDTO.setTicketTierId(tierID);
                 ticketDTO.setEventId(eventDTO.getEventID());
+                ticketDTO.setPrice(finalPrice/numTickets);
                 ticketService.createTicket(ticketDTO);
             }
             tierDTO.setAvailableTickets(tierDTO.getAvailableTickets()- numTickets);
